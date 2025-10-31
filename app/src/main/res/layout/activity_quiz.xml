@@ -1,10 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizActivity">
+    android:background="@drawable/fondo_escenario"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Estrellas arriba -->
+    <LinearLayout
+        android:id="@+id/starsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp">
+
+        <ImageView android:id="@+id/star1" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star2" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star3" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star4" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star5" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+    </LinearLayout>
+
+    <!-- Opciones (imágenes de respuesta) -->
+    <LinearLayout
+        android:id="@+id/optionsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_marginStart="8dp">
+
+        <ImageView android:id="@+id/option1" android:layout_width="120dp" android:layout_height="120dp" android:layout_margin="8dp"/>
+        <ImageView android:id="@+id/option2" android:layout_width="120dp" android:layout_height="120dp" android:layout_margin="8dp"/>
+        <ImageView android:id="@+id/option3" android:layout_width="120dp" android:layout_height="120dp" android:layout_margin="8dp"/>
+    </LinearLayout>
+
+    <!-- Personaje (GIF) -->
+    <ImageView
+        android:id="@+id/characterGif"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/personaje_gif"
+        android:adjustViewBounds="true" />
+
+    <!-- Bocadillo con pregunta -->
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/characterGif"
+        android:layout_toEndOf="@id/characterGif"
+        android:background="@drawable/bocadillo"
+        android:padding="16dp"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:text="¿Cuál de estos animales vuela?" />
+
+</RelativeLayout>

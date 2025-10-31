@@ -1,0 +1,122 @@
+[
+  {
+    "text": "¿Cuál de estos animales vuela?",
+    "audio": "pregunta1",
+    "options": ["perro", "murcielago", "pez"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cuál de estos vive en el mar?",
+    "audio": "pregunta2",
+    "options": ["pez", "gato", "pajaro"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál fruta es amarilla?",
+    "audio": "pregunta3",
+    "options": ["manzana", "platano", "uva"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cuál de estos vehículos vuela?",
+    "audio": "pregunta4",
+    "options": ["coche", "avion", "bicicleta"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Qué objeto se usa para escribir?",
+    "audio": "pregunta5",
+    "options": ["lapiz", "cuchara", "pelota"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para comer sopa?",
+    "audio": "pregunta6",
+    "options": ["tenedor", "cuchara", "cuchillo"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cuál de estos animales es más grande?",
+    "audio": "pregunta7",
+    "options": ["elefante", "raton", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos cuando llueve?",
+    "audio": "pregunta8",
+    "options": ["paraguas", "gafas", "gorra"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos es un instrumento musical?",
+    "audio": "pregunta9",
+    "options": ["guitarra", "plato", "taza"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué fruta es roja?",
+    "audio": "pregunta10",
+    "options": ["sandía", "platano", "pera"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales dice 'miau'?",
+    "audio": "pregunta11",
+    "options": ["perro", "gato", "vaca"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cuál de estos animales pone huevos?",
+    "audio": "pregunta12",
+    "options": ["gallina", "vaca", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para cepillarnos los dientes?",
+    "audio": "pregunta13",
+    "options": ["cepillo", "peine", "toalla"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para ver mejor si hay sol?",
+    "audio": "pregunta14",
+    "options": ["gafas", "bufanda", "guantes"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para cortar papel?",
+    "audio": "pregunta15",
+    "options": ["tijeras", "pegamento", "lápiz"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos medios de transporte puede llevar a mucha gente?",
+    "audio": "pregunta16",
+    "options": ["tren", "moto", "bicicleta"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para dormir por la noche?",
+    "audio": "pregunta17",
+    "options": ["almohada", "plato", "silla"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué animal vive en el agua y tiene una concha?",
+    "audio": "pregunta18",
+    "options": ["tortuga", "leon", "gato"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos alimentos es una verdura?",
+    "audio": "pregunta19",
+    "options": ["zanahoria", "galleta", "helado"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para escuchar música?",
+    "audio": "pregunta20",
+    "options": ["auriculares", "taza", "libro"],
+    "correctIndex": 0
+  }
+]
