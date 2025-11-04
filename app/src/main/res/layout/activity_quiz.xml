@@ -1,10 +1,101 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizActivity">
+    android:background="@drawable/fondo_escenario"
+    android:padding="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Estrellas -->
+    <LinearLayout
+        android:id="@+id/starsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp">
+
+        <ImageView android:id="@+id/star1" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star2" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star3" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star4" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+        <ImageView android:id="@+id/star5" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
+    </LinearLayout>
+
+    <!-- Opciones (respuestas) -->
+    <LinearLayout
+        android:id="@+id/optionsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="30dp">
+
+        <ImageView
+            android:id="@+id/option1"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/option_background"
+            android:src="@drawable/medusa"
+            android:scaleType="centerCrop"
+            android:contentDescription="Opción 1" />
+
+        <ImageView
+            android:id="@+id/option2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/option_background"
+            android:src="@drawable/murcielago"
+            android:scaleType="centerCrop"
+            android:contentDescription="Opción 2" />
+
+        <ImageView
+            android:id="@+id/option3"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/option_background"
+            android:src="@drawable/spider"
+            android:scaleType="centerCrop"
+            android:contentDescription="Opción 3" />
+    </LinearLayout>
+
+    <!-- Personaje -->
+    <ImageView
+        android:id="@+id/characterGif"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="150dp"
+        android:src="@drawable/personaje_gif"
+        android:adjustViewBounds="true" />
+
+    <!-- Bocadillo -->
+    <ImageView
+        android:id="@+id/speechBubble"
+        android:layout_width="187dp"
+        android:layout_height="184dp"
+        android:layout_alignTop="@id/characterGif"
+        android:layout_marginStart="-79dp"
+        android:layout_marginTop="-40dp"
+        android:layout_toEndOf="@id/characterGif"
+        android:adjustViewBounds="true"
+        android:src="@drawable/bocadillo" />
+
+    <!-- Texto dentro del bocadillo -->
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/speechBubble"
+        android:layout_alignTop="@id/speechBubble"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="65dp"
+        android:text="¿Cuál de estos animales vuela?"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
