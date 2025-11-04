@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".SeleccionarAvatarActivity"
+            android:exported="false" />
+        <activity
             android:name=".QuizActivity"
             android:exported="false" />
         <activity

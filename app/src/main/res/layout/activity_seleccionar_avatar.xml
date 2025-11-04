@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/eligepersonaje">
+
+    <GridLayout
+        android:id="@+id/gridAvatares"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="1"
+        android:columnCount="6"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="220dp"
+        tools:layout_editor_absoluteY="560dp">
+
+        <ImageView
+            android:id="@+id/avatar1"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/avatar1"
+            android:contentDescription="Avatar 1"/>
+
+
+        <ImageView
+            android:id="@+id/avatar2"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/avatar2"
+            android:contentDescription="Avatar 2"/>
+
+        <ImageView
+            android:id="@+id/avatar3"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/avatar3"
+            android:contentDescription="Avatar 3"/>
+
+        <ImageView
+            android:id="@+id/avatar4"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/avatar4"
+            android:contentDescription="Avatar 4"/>
+
+        <ImageView
+            android:id="@+id/avatar5"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/avatar5"
+            android:contentDescription="Avatar 5"/>
+
+        <ImageView
+            android:id="@+id/avatar6"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/avatar6"
+            android:contentDescription="Avatar 6"/>
+
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
