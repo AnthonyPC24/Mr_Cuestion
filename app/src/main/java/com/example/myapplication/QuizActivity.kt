@@ -50,7 +50,7 @@ class QuizActivity : AppCompatActivity() {
         questionText = findViewById(R.id.questionText)
         option1 = findViewById(R.id.option1)
         option2 = findViewById(R.id.option2)
-        option3 = findViewById(R.id.option3)
+        option3 = findViewById(R.id.option3) //hola
 
         // 🔄 Cargar preguntas
         questions = loadQuestions()
