@@ -12,14 +12,25 @@
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:padding="8dp">
+        android:translationX="-120dp"
+    android:padding="8dp">
 
-        <ImageView android:id="@+id/star1" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
-        <ImageView android:id="@+id/star2" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
-        <ImageView android:id="@+id/star3" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
-        <ImageView android:id="@+id/star4" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
-        <ImageView android:id="@+id/star5" android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/star_empty"/>
-    </LinearLayout>
+    <ImageView android:id="@+id/star1"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star2"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star3"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star4"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star5"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star6"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star7"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star8"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star9"  android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star10" android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star11" android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star12" android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star13" android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star14" android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+    <ImageView android:id="@+id/star15" android:layout_width="30dp" android:layout_height="30dp" android:src="@drawable/star_empty"/>
+</LinearLayout>
 
     <!-- Opciones (respuestas) -->
     <LinearLayout
@@ -37,8 +48,8 @@
             android:layout_height="120dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/option_background"
-            android:src="@drawable/medusa"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
+            android:clipToOutline="true"
             android:contentDescription="Opción 1" />
 
         <ImageView
@@ -47,8 +58,8 @@
             android:layout_height="120dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/option_background"
-            android:src="@drawable/murcielago"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
+            android:clipToOutline="true"
             android:contentDescription="Opción 2" />
 
         <ImageView
@@ -56,8 +67,8 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/option_background"
-            android:src="@drawable/spider"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
+            android:clipToOutline="true"
             android:contentDescription="Opción 3" />
     </LinearLayout>
 
@@ -73,29 +84,39 @@
         android:adjustViewBounds="true" />
 
     <!-- Bocadillo -->
-    <ImageView
-        android:id="@+id/speechBubble"
-        android:layout_width="187dp"
-        android:layout_height="184dp"
-        android:layout_alignTop="@id/characterGif"
-        android:layout_marginStart="-79dp"
-        android:layout_marginTop="-40dp"
-        android:layout_toEndOf="@id/characterGif"
-        android:adjustViewBounds="true"
-        android:src="@drawable/bocadillo" />
-
-    <!-- Texto dentro del bocadillo -->
-    <TextView
-        android:id="@+id/questionText"
-        android:layout_width="160dp"
+    <!-- 💬 Bocadillo con texto alineado al personaje -->
+    <LinearLayout
+        android:id="@+id/speechBubbleContainer"
+        android:layout_width="3000dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/speechBubble"
-        android:layout_alignTop="@id/speechBubble"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="65dp"
-        android:text="¿Cuál de estos animales vuela?"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_toEndOf="@id/characterGif"
+        android:layout_alignTop="@id/characterGif"
+        android:layout_marginStart="-80dp"
+        android:layout_marginTop="-250dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bocadillo"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="35dp"
+        android:paddingBottom="40dp">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/questionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¿Cuál de estos animales pone huevos?"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="12dp"
+            android:ellipsize="none"
+            android:scrollHorizontally="false"
+            android:singleLine="false"
+            android:maxWidth="280dp"
+            android:lineSpacingExtra="4dp"
+            android:breakStrategy="simple" />
+    </LinearLayout>
+
+    </RelativeLayout>

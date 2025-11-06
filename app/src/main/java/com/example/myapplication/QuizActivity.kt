@@ -21,6 +21,7 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var option2: ImageView
     private lateinit var option3: ImageView
 
+    private lateinit var stars: List<ImageView>
     private var questions: List<Question> = emptyList()
     private var currentIndex = 0
     private var score = 0
@@ -29,8 +30,16 @@ class QuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
+        stars = listOf(
+            findViewById(R.id.star1), findViewById(R.id.star2), findViewById(R.id.star3),
+            findViewById(R.id.star4), findViewById(R.id.star5), findViewById(R.id.star6),
+            findViewById(R.id.star7), findViewById(R.id.star8), findViewById(R.id.star9),
+            findViewById(R.id.star10), findViewById(R.id.star11), findViewById(R.id.star12),
+            findViewById(R.id.star13), findViewById(R.id.star14), findViewById(R.id.star15)
+                      )
+
         // 🎵 Música de fondo
-        mediaPlayer = MediaPlayer.create(this, R.raw.musica_quizz_dificil)
+        mediaPlayer = MediaPlayer.create(this, R.raw.musica_quizz_medio)
         mediaPlayer.isLooping = true
         mediaPlayer.setVolume(1.0f, 1.0f)
         mediaPlayer.start()
@@ -114,6 +123,8 @@ class QuizActivity : AppCompatActivity() {
             wrongSound.start()
         }
 
+        updateStars(currentIndex + 1)
+
         // ⏳ Esperar al fin del sonido para continuar
         val soundToWait = if (isCorrect) correctSound else wrongSound
         soundToWait.setOnCompletionListener {
@@ -149,5 +160,15 @@ class QuizActivity : AppCompatActivity() {
         mediaPlayer.release()
         correctSound.release()
         wrongSound.release()
+    }
+
+    private fun updateStars(score: Int) {
+        for (i in stars.indices) {
+            if (i < score) {
+                stars[i].setImageResource(R.drawable.star) // Imagen de estrella llena
+            } else {
+                stars[i].setImageResource(R.drawable.star_empty) // Imagen vacía
+            }
+        }
     }
 }
