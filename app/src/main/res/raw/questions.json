@@ -20,7 +20,7 @@
   {
     "text": "¿Cuál de estos vehículos vuela?",
     "audio": "pregunta4",
-    "options": ["coche", "bicicleta", "avion"],
+    "options": ["coche", "triciclo", "avion"],
     "correctIndex": 2
   },
   {
@@ -44,19 +44,19 @@
   {
     "text": "¿Qué usamos cuando llueve?",
     "audio": "pregunta8",
-    "options": ["paraguas", "gafas", "gorra"],
+    "options": ["paraguas", "gafas", "helado"],
     "correctIndex": 0
   },
   {
     "text": "¿Cuál de estos es un instrumento musical?",
     "audio": "pregunta9",
-    "options": ["guitarra", "plato", "taza"],
+    "options": ["guitarra", "huevo", "mayonesa"],
     "correctIndex": 0
   },
   {
     "text": "¿Qué fruta es roja?",
     "audio": "pregunta10",
-    "options": ["sandía", "platano", "pera"],
+    "options": ["sandia", "platano", "pera"],
     "correctIndex": 0
   },
   {
@@ -74,7 +74,7 @@
   {
     "text": "¿Qué usamos para cepillarnos los dientes?",
     "audio": "pregunta13",
-    "options": ["peine", "cepillo", "toalla"],
+    "options": ["motosierra", "cepillo", "toalla"],
     "correctIndex": 1
   },
   {
@@ -92,13 +92,13 @@
   {
     "text": "¿Cuál de estos medios de transporte puede llevar a muchisima gente?",
     "audio": "pregunta16",
-    "options": ["moto", "tren", "bicicleta"],
+    "options": ["moto", "tren", "triciclo"],
     "correctIndex": 1
   },
   {
     "text": "¿Qué usamos para dormir por la noche?",
     "audio": "pregunta17",
-    "options": ["almohada", "plato", "silla"],
+    "options": ["almohada", "toilet", "casamascotil"],
     "correctIndex": 0
   },
   {
@@ -116,7 +116,7 @@
   {
     "text": "¿Qué usamos para escuchar música?",
     "audio": "pregunta20",
-    "options": ["taza", "auriculares ", "libro"],
+    "options": ["toilet", "auriculares", "libro"],
     "correctIndex": 1
   }
 ]
