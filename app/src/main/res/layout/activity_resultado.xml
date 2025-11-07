@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_escenario"
+    android:padding="16dp">
+
+    <!-- Contenedor para las imágenes girando alrededor -->
+    <FrameLayout
+        android:id="@+id/orbitContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" />
+
+    <!-- GIF del personaje -->
+    <ImageView
+        android:id="@+id/characterGif"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/tennagirando"
+        android:contentDescription="Personaje" />
+
+    <!-- Bocadillo con el texto del resultado -->
+    <LinearLayout
+        android:id="@+id/speechBubbleContainer"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/characterGif"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bocadillo2"
+        android:padding="16dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¡Has acertado 10 de 15!"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="center" />
+    </LinearLayout>
+
+</RelativeLayout>
