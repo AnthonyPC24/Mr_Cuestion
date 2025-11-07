@@ -16,6 +16,7 @@ import android.content.pm.PackageManager
 import android.view.animation.ScaleAnimation
 import org.json.JSONArray
 import com.example.myapplication.model.Avatar
+import com.example.myapplication.model.Partida
 
 
 class SeleccionarAvatarActivity : AppCompatActivity() {
@@ -51,7 +52,8 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
             imageView.startAnimation(animation)
 
             imageView.setOnClickListener {
-                guardarDatosIniciales(avatar)
+                val partida = Partida(avatar=avatar.nombre)
+                guardarDatosIniciales(partida)
                 Toast.makeText(this, "Elegiste ${avatar.nombre} 🎉", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, SeleccionarPreguntasActivity::class.java)
@@ -60,6 +62,8 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
                 intent.putExtra("avatarImagen", avatar.imagen)
 
                 startActivity(intent)
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0,0)
                 finish()
             }
         }
@@ -72,32 +76,19 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
         }
 
     }
-    private fun guardarDatosIniciales(avatar: Avatar) {
-        val jsonPartida = JSONObject().apply {
-            put("avatar",avatar.nombre )
-            put("tiempoPartida", "")
-            put("errores", 0)
-            put("puntuacion", 0)
-            put("fechaHora", obtenerFechaActual()) }
+    private fun guardarDatosIniciales(partida: Partida) {
 
-        //guardar copia en la carpeta publica dowloads para que el gestor externo pueda leerlo
         val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val archivosDescargas = File(downloads, "partidas.json")
+        val archivo = File(downloads, "partidas.json")
 
-       val jsonArray = if (archivosDescargas.exists()){
-           JSONArray(archivosDescargas.readText())
-       } else{
-           JSONArray()
-       }
+        val jsonArray = if (archivo.exists()){
+            JSONArray(archivo.readText())
+        } else{
+            JSONArray()
+        }
 
-        jsonArray.put(jsonPartida)
-        archivosDescargas.writeText(jsonArray.toString(4))
-
-    }
-
-    private fun obtenerFechaActual(): String {
-        val formato = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        return formato.format(Date())
+        jsonArray.put(partida.toJson())
+        archivo.writeText(jsonArray.toString(4))
     }
 }
 

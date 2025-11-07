@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
             btnInicio.clearAnimation()
             val intent = Intent(this, SeleccionarAvatarActivity::class.java)
             startActivity(intent)
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0,0)
+            finish()
         }
 
     }
