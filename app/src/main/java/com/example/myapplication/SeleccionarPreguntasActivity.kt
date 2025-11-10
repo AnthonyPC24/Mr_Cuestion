@@ -9,21 +9,24 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.model.Partida
 import android.view.animation.ScaleAnimation
 import android.widget.Toast
+import com.example.myapplication.model.FilesManager
 import org.json.JSONArray
 import java.io.File
 
 
 class SeleccionarPreguntasActivity : AppCompatActivity() {
 
-    private lateinit var partida: Partida
+
+    private lateinit var avatarNombre: String
+    private var numPreguntas: Int = 0
+    private var dificultad: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_seleccionar_preguntas)
 
-        val avatarNombre = intent.getStringExtra("avatarNombew")?:"avatar_desconocido"
-        partida = Partida(avatar = avatarNombre)
+        avatarNombre = intent.getStringExtra("avatarNombre")?:"avatar_desconocido"
 
         mostrarSelectorPregutnas()
     }
@@ -34,6 +37,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
         contenedor.removeAllViews()
         contenedor.addView(layout)
 
+        //Variables de los botones
         val botones = listOf(
             layout.findViewById<ImageView>(R.id.btn5) to 5,
             layout.findViewById<ImageView>(R.id.btn10) to 10,
@@ -44,7 +48,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
         botones.forEach { (boton, cantidad) ->
             boton.startAnimation(anim)
             boton.setOnClickListener {
-                partida.numPreguntas = cantidad
+                numPreguntas = cantidad
                 Toast.makeText(this, "Elegiste $cantidad preguntas", Toast.LENGTH_SHORT).show()
                 mostrarSelectorDificultad()
             }
@@ -53,6 +57,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
     }
 
     private fun mostrarSelectorDificultad(){
+
 
         val contenedor = findViewById<android.widget.FrameLayout>(R.id.contenedorOpciones)
         val layout = LayoutInflater.from(this).inflate(R.layout.layout_dificultad, contenedor, false)
@@ -67,12 +72,21 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
 
         val anim = crearAnimacion()
 
-        botones.forEach { (boton, dificultad) ->
+        botones.forEach { (boton, dificultadElegida) ->
             boton.startAnimation(anim)
+
             boton.setOnClickListener {
-                partida.dificultad = dificultad
+                dificultad = dificultadElegida
+
+                val partida = Partida(
+                    avatar = avatarNombre,
+                    numPreguntas = numPreguntas,
+                    dificultad = dificultad
+                                     )
+
                 Toast.makeText(this, "Dificultad: $dificultad ⚡", Toast.LENGTH_SHORT).show()
-                guardarPartida()
+
+                FilesManager.savePartida(this, partida)
             }
         }
     }
@@ -88,19 +102,5 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
             repeatMode = ScaleAnimation.REVERSE
             repeatCount = ScaleAnimation.INFINITE
         }
-    }
-
-    private fun guardarPartida(){
-        val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val archivo = File(downloads, "partidas.json")
-
-        val jsonArray = if (archivo.exists()){
-            JSONArray(archivo.readText())
-        } else{
-            JSONArray()
-        }
-
-        jsonArray.put(partida.toJson())
-        archivo.writeText(jsonArray.toString(4))
     }
 }

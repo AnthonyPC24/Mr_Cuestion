@@ -16,6 +16,7 @@ import android.content.pm.PackageManager
 import android.view.animation.ScaleAnimation
 import org.json.JSONArray
 import com.example.myapplication.model.Avatar
+import com.example.myapplication.model.FilesManager
 import com.example.myapplication.model.Partida
 
 
@@ -52,43 +53,20 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
             imageView.startAnimation(animation)
 
             imageView.setOnClickListener {
-                val partida = Partida(avatar=avatar.nombre)
-                guardarDatosIniciales(partida)
-                Toast.makeText(this, "Elegiste ${avatar.nombre} 🎉", Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, SeleccionarPreguntasActivity::class.java)
 
                 intent.putExtra("avatarNombre", avatar.nombre)
                 intent.putExtra("avatarImagen", avatar.imagen)
 
+                Toast.makeText(this, "Elegiste ${avatar.nombre} 🎉", Toast.LENGTH_SHORT).show()
+                //Opcion para que cambie de pantalla instantaneamente
                 startActivity(intent)
                 @Suppress("DEPRECATION")
                 overridePendingTransition(0,0)
                 finish()
             }
         }
-
-
-        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED) {
-
-            requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-        }
-
-    }
-    private fun guardarDatosIniciales(partida: Partida) {
-
-        val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val archivo = File(downloads, "partidas.json")
-
-        val jsonArray = if (archivo.exists()){
-            JSONArray(archivo.readText())
-        } else{
-            JSONArray()
-        }
-
-        jsonArray.put(partida.toJson())
-        archivo.writeText(jsonArray.toString(4))
     }
 }
 

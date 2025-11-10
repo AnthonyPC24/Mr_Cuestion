@@ -27,12 +27,6 @@
         <!-- 🔹 MainActivity ya NO tiene el intent-filter -->
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-
-        <!-- 🚀 Ahora QuizActivity es la actividad principal -->
-        <activity
-            android:name=".QuizActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -40,6 +34,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 🚀 Ahora QuizActivity es la actividad principal -->
+        <activity
+            android:name=".QuizActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"/>
+
         <activity
             android:name=".ResultadoActivity"
             android:exported="false"
