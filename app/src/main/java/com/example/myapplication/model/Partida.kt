@@ -19,16 +19,4 @@ data class Partida(
             return formato.format(Date())
         }
     }
-
-    fun toJson(): JSONObject {
-        return JSONObject().apply {
-            put("avatar", avatar)
-            put("numPreguntas", numPreguntas)
-            put("dificultad", dificultad)
-            put("puntuacion", puntuacion)
-            put("errores", errores)
-            put("tiempoPartida", tiempoPartida)
-            put("fechaHora", fechaHoraInicio)
-        }
-    }
 }
