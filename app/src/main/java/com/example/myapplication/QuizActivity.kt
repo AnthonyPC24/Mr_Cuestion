@@ -32,6 +32,7 @@ class QuizActivity : AppCompatActivity() {
     private var respuestasCorrectas: Int = 0
     private val imagenesCorrectas = ArrayList<String>()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)

@@ -31,13 +31,17 @@ class MainActivity : AppCompatActivity() {
             repeatCount = ScaleAnimation.INFINITE
         }
 
+        // inicia la animacion de profundidad
         btnInicio.startAnimation(scaleAnimation)
 
-        // Al hacer clic, parar animación y pasar a la siguiente pantalla
+        // Al hacer clic, para animación y pasar a la siguiente pantalla
         btnInicio.setOnClickListener {
             btnInicio.clearAnimation()
             val intent = Intent(this, SeleccionarAvatarActivity::class.java)
             startActivity(intent)
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0,0)
+            finish()
         }
 
     }
