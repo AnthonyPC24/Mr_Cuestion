@@ -1,0 +1,243 @@
+[
+  {
+    "text": "¿Cuál de estas fracciones representa la mitad?",
+    "audio": "pregunta81",
+    "options": ["unmedio", "untercio", "uncuarto"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué consola es de Nintendo?",
+    "audio": "pregunta82",
+    "options": ["nintendo", "play", "xbox"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿En qué imagen hay un triángulo equilátero?",
+    "audio": "pregunta83",
+    "options": ["equilatero", "isosceles", "escaleno"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos seres vivos practica la fotosintesis?",
+    "audio": "pregunta84",
+    "options": ["planta", "tigre", "roca"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos países está en Asia?",
+    "audio": "pregunta85",
+    "options": ["japon", "mexico", "espania"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿En qué imagen se muestra una multiplicación correcta de 3 x 4?",
+    "audio": "pregunta86",
+    "options": ["doce", "nueve", "dieciseis"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos animales pone huevos?",
+    "audio": "pregunta87",
+    "options": ["equidna", "murcielago", "topo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estas figuras tiene simetría?",
+    "audio": "pregunta88",
+    "options": ["mariposa", "nube", "hoja"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿En qué imagen hay un animal omnívoro?",
+    "audio": "pregunta89",
+    "options": ["oso", "vaca", "leon"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estas imágenes representa una fracción mayor?",
+    "audio": "pregunta90",
+    "options": ["trescuartos", "unmedio", "untercio"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué videojuego muestra un mundo de bloques donde se puede construir?",
+    "audio": "pregunta91",
+    "options": ["minecraft", "pokemon", "fortnite"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos es Michael Jackson?",
+    "audio": "pregunta92",
+    "options": ["michael", "weeknd", "brunomars"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos símbolos representa un número par?",
+    "audio": "pregunta93",
+    "options": ["ocho", "cinco", "siete"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estas imagenes muestra algo que no es real?",
+    "audio": "pregunta94",
+    "options": ["tierraplana", "luna", "pajaro"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales provoca mas muertes al año?",
+    "audio": "pregunta95",
+    "options": ["mosquito", "orca", "tigre"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué personaje pertenece al universo de Mario Bros?",
+    "audio": "pregunta96",
+    "options": ["goomba", "ash", "waddledoo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos personajes es de Disney?",
+    "audio": "pregunta97",
+    "options": ["gilito", "megamind", "shrek"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos animales es una tarantula?",
+    "audio": "pregunta98",
+    "options": ["tarantula", "viudanegra", "violinista"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Que se usa para que el coche pueda funcionar?",
+    "audio": "pregunta99",
+    "options": ["gasolina", "energiaeolica", "energiaradioactiva"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos libros es usado para dar misa?",
+    "audio": "pregunta100",
+    "options": ["biblia", "diariodegreg", "necronomicon"],
+    "correctIndex": 0
+  },
+    {
+      "text": "¿Cuál de estas figuras tiene cuatro lados iguales?",
+      "audio": "pregunta101",
+      "options": ["cuadrado", "rectangulo", "romboide"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Quien es el actual presidente de España?",
+      "audio": "pregunta102",
+      "options": ["pedrosanchez", "donaldtrump", "kimjongun"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cual de estas figuras es un trapezoide?",
+      "audio": "pregunta103",
+      "options": ["trapezoide", "dodecaedro", "prisma"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cual de estos Pokemon es tipo planta?",
+      "audio": "pregunta104",
+      "options": ["exeggcute", "bonsly", "floette"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cuál de estos animales es un anfibio?",
+      "audio": "pregunta105",
+      "options": ["ajolote", "camaleon", "lombriz"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Qué instrumento se usa para observar los planetas?",
+      "audio": "pregunta106",
+      "options": ["telescopio", "microscopio", "brujula"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cuál de estos números es una decena completa?",
+      "audio": "pregunta107",
+      "options": ["diez", "siete", "menostres"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cual de estos es un kebab?",
+      "audio": "pregunta108",
+      "options": ["kebab", "taco", "pollo"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿En qué imagen hay un ser vivo invertebrado?",
+      "audio": "pregunta109",
+      "options": ["caracol", "perro", "pajaro"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cuál de estos alimentos tiene más calcio?",
+      "audio": "pregunta110",
+      "options": ["leche", "pan", "manzana"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Qué figura muestra un ángulo recto?",
+      "audio": "pregunta111",
+      "options": ["noventagrados", "cuarentaycincogrados", "cientoveintegrados"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cual de estos animales es legal tenerlo de mascota?",
+      "audio": "pregunta112",
+      "options": ["huron", "lince", "mapache"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cual de estos no esta catalogado como pez?",
+      "audio": "pregunta113",
+      "options": ["delfin", "caballitodemar", "morena"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Qué material es transparente a la luz?",
+      "audio": "pregunta114",
+      "options": ["vidrio", "madera", "metal"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cuál de estas imágenes muestra un ecosistema del desierto?",
+      "audio": "pregunta115",
+      "options": ["desierto", "selva", "oceano"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Qué personaje es Bart Simpson?",
+      "audio": "pregunta116",
+      "options": ["bart", "eric", "stewie"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cuál de estas operaciones da un resultado mayor?",
+      "audio": "pregunta117",
+      "options": ["nuevepornueve", "sieteporocho", "seisporsiete"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Qué imagen muestra un ordenador portátil?",
+      "audio": "pregunta118",
+      "options": ["laptop", "televisor", "tablet"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Que animal expulsa hedor para defenderse?",
+      "audio": "pregunta119",
+      "options": ["mofeta", "mapache", "zorro"],
+      "correctIndex": 0
+    },
+    {
+      "text": "¿Cuanto es 37 + 10 X 3?",
+      "audio": "pregunta120",
+      "options": ["sesentaysiete", "sesentayseis", "sesentaynueve"],
+      "correctIndex": 0
+    }
+  ]
+
