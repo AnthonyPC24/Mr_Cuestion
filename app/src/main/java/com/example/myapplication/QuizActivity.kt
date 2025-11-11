@@ -82,7 +82,7 @@ class QuizActivity : AppCompatActivity() {
 
     // Carga de preguntas desde questions.json
     private fun loadQuestions(): List<Question> {
-        val json = resources.openRawResource(R.raw.questions).bufferedReader().use { it.readText() }
+        val json = resources.openRawResource(R.raw.mediumquestions).bufferedReader().use { it.readText() }
         val jsonArray = JSONArray(json)
         val result = mutableListOf<Question>()
 

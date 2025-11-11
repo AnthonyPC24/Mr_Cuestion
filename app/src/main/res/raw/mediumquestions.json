@@ -1,0 +1,243 @@
+[
+  {
+    "text": "¿Cuál de estos animales es un mamífero pero no puede volar?",
+    "audio": "pregunta1",
+    "options": ["murcielago", "elefante", "aguila"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Qué fruta tiene más vitamina C?",
+    "audio": "pregunta2",
+    "options": ["manzana", "naranja", "platano"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cuál de estos planetas es saturno?",
+    "audio": "pregunta3",
+    "options": ["saturno", "jupiter", "venus"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos objetos se usa para medir la temperatura?",
+    "audio": "pregunta4",
+    "options": ["termometro", "regla", "balanza"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales es un reptil?",
+    "audio": "pregunta5",
+    "options": ["tortuga", "gato", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué instrumento musical se toca con viento?",
+    "audio": "pregunta6",
+    "options": ["flauta", "tambor", "guitarra"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué animal puede cambiar de color según el ambiente?",
+    "audio": "pregunta7",
+    "options": ["camaleon", "pez", "jirafa"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos alimentos es una legumbre?",
+    "audio": "pregunta8",
+    "options": ["lenteja", "zanahoria", "manzana"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para sujetar hojas de papel juntas?",
+    "audio": "pregunta9",
+    "options": ["grapadora", "pegamento", "tijeras"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos medios de transporte se mueve sobre rieles?",
+    "audio": "pregunta10",
+    "options": ["tren", "autobus", "bicicleta"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué animal tiene colmillos y vive en la selva?",
+    "audio": "pregunta11",
+    "options": ["elefante", "tigre", "conejo"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cual de estos graciosos personajes es Mr Cuestion?",
+    "audio": "pregunta12",
+    "options": ["tenna", "spamton", "pim"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales pone huevos pero no vuela?",
+    "audio": "pregunta13",
+    "options": ["avestruz", "murcielago", "perro"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos es un pokemon?",
+    "audio": "pregunta14",
+    "options": ["pikachu", "agumon", "pepapig"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales vive en la sabana?",
+    "audio": "pregunta15",
+    "options": ["leon", "pinguino", "tiburon"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué fruta es rica en potasio?",
+    "audio": "pregunta16",
+    "options": ["platano", "fresa", "manzana"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos instrumentos se toca con cuerdas?",
+    "audio": "pregunta17",
+    "options": ["guitarra", "trompeta", "tambor"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuanto es 2 + 2?",
+    "audio": "pregunta18",
+    "options": ["cuatro", "sesentaysiete", "seis"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales puede vivir en agua y tierra?",
+    "audio": "pregunta19",
+    "options": ["rana", "pez", "gato"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para medir longitud?",
+    "audio": "pregunta20",
+    "options": ["regla", "termometro", "balanza"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué animal es conocido por hacer miel?",
+    "audio": "pregunta21",
+    "options": ["abeja", "mosquito", "hormiga"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos alimentos es un cereal?",
+    "audio": "pregunta22",
+    "options": ["arroz", "zanahoria", "manzana"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué instrumento se toca con percusión?",
+    "audio": "pregunta23",
+    "options": ["tambor", "piano", "guitarra"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales es carnívoro?",
+    "audio": "pregunta24",
+    "options": ["tigre", "vaca", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿En que aplicacion se ven videos?",
+    "audio": "pregunta25",
+    "options": ["tiktok", "gmail", "brawlstars"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿A que animal no le gusta la sal?",
+    "audio": "pregunta26",
+    "options": ["caracol", "vaca", "cabra"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales vive en el Ártico?",
+    "audio": "pregunta27",
+    "options": ["osopolar", "leon", "elefante"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué fruta es morada?",
+    "audio": "pregunta28",
+    "options": ["uva", "naranja", "manzana"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual es la bandera de España?",
+    "audio": "pregunta29",
+    "options": ["espania", "japon", "nigeria"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales es un ornitorrinco?",
+    "audio": "pregunta30",
+    "options": ["ornitorrinco", "tardigrado", "clionidae"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué medio de transporte permite ir debajo del agua?",
+    "audio": "pregunta31",
+    "options": ["submarino", "barco", "jetski"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de los siguientes colores no esta en el semaforo?",
+    "audio": "pregunta32",
+    "options": ["azul", "verde", "rojo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales vive en un nido?",
+    "audio": "pregunta33",
+    "options": ["pajaro", "gato", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué se usa para calentar comida en casa rápidamente?",
+    "audio": "pregunta34",
+    "options": ["microondas", "nevera", "olla"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos es un personaje de videojuegos?",
+    "audio": "pregunta35",
+    "options": ["mario", "doraemon", "pepapig"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para iluminar una habitación?",
+    "audio": "pregunta36",
+    "options": ["lampara", "televisor", "silla"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué fruta es acida?",
+    "audio": "pregunta37",
+    "options": ["limon", "pera", "platano"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos es un meme?",
+    "audio": "pregunta38",
+    "options": ["trollface", "abuela", "seta"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cual de estos mounstros puede flotar?",
+    "audio": "pregunta39",
+    "options": ["fantasma", "zombie", "momia"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué superheroe es conocido por ser muy rápido?",
+    "audio": "pregunta40",
+    "options": ["flash", "hulk", "batman"],
+    "correctIndex": 0
+  }
+]
+

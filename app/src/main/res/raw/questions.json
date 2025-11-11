@@ -118,5 +118,125 @@
     "audio": "pregunta20",
     "options": ["toilet", "auriculares", "libro"],
     "correctIndex": 1
+  },
+  {
+    "text": "¿Qué usamos para lavarnos las manos?",
+    "audio": "pregunta21",
+    "options": ["jabon", "pelota", "guitarra"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué fruta es de color naranja?",
+    "audio": "pregunta22",
+    "options": ["pera", "naranja", "uva"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Cuál de estos animales tiene plumas?",
+    "audio": "pregunta23",
+    "options": ["pato", "vaca", "perro"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para beber agua?",
+    "audio": "pregunta24",
+    "options": ["vaso", "plato", "tenedor"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales vive en la granja?",
+    "audio": "pregunta25",
+    "options": ["cerdo", "abuela", "tigre"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para protegernos del sol?",
+    "audio": "pregunta26",
+    "options": ["sombrero", "guantes", "bufanda"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para ver la hora?",
+    "audio": "pregunta27",
+    "options": ["reloj", "televisor", "pelota"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales es pequeño?",
+    "audio": "pregunta28",
+    "options": ["elefante", "raton", "jirafa"],
+    "correctIndex": 1
+  },
+  {
+    "text": "¿Qué usamos para escribir en una pizarra?",
+    "audio": "pregunta29",
+    "options": ["tiza", "plato", "cuchillo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para secarnos después de bañarnos?",
+    "audio": "pregunta30",
+    "options": ["toalla", "libro", "basura"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales vive en el agua?",
+    "audio": "pregunta31",
+    "options": ["pez", "gato", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para peinarnos?",
+    "audio": "pregunta32",
+    "options": ["peine", "tenedor", "cuchillo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos alimentos es dulce?",
+    "audio": "pregunta33",
+    "options": ["caramelo", "zanahoria", "pan"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para dormir tapados?",
+    "audio": "pregunta34",
+    "options": ["manta", "basura", "mochila"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos animales es un bicho?",
+    "audio": "pregunta35",
+    "options": ["mosquito", "perro", "gato"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para jugar a la consola?",
+    "audio": "pregunta36",
+    "options": ["mando", "tijeras", "libro"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos objetos se usa para limpiar el suelo?",
+    "audio": "pregunta37",
+    "options": ["escoba", "almohada", "lengua"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué animal tiene una melena?",
+    "audio": "pregunta38",
+    "options": ["leon", "cerdo", "conejo"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Qué usamos para cortar comida?",
+    "audio": "pregunta39",
+    "options": ["cuchillo", "tenedor", "plato"],
+    "correctIndex": 0
+  },
+  {
+    "text": "¿Cuál de estos medios de transporte va por el agua?",
+    "audio": "pregunta40",
+    "options": ["barco", "avion", "triciclo"],
+    "correctIndex": 0
   }
 ]
