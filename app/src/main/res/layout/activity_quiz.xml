@@ -90,7 +90,7 @@
     <!-- 💬 Bocadillo con texto alineado al personaje -->
     <LinearLayout
         android:id="@+id/speechBubbleContainer"
-        android:layout_width="3000dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/characterGif"
         android:layout_alignTop="@id/characterGif"
@@ -106,22 +106,19 @@
 
         <TextView
             android:id="@+id/questionText"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¿Cuál de estos animales pone huevos?"
+            android:text="¿Qué videojuego muestra un mundo de bloques donde se puede construir?"
             android:textColor="#000000"
-            android:textSize="30sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:gravity="center"
             android:padding="12dp"
-            android:ellipsize="none"
-            android:scrollHorizontally="false"
-            android:singleLine="false"
-            android:maxWidth="280dp"
+            android:maxWidth="400dp"
             android:lineSpacingExtra="4dp"
-            android:breakStrategy="simple" />
-
-
+            android:breakStrategy="simple"
+            android:ellipsize="none"
+            android:singleLine="false" />
     </LinearLayout>
 
     <ImageView

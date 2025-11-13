@@ -27,24 +27,30 @@
         <!-- 🔹 MainActivity ya NO tiene el intent-filter -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- 🚀 Ahora QuizActivity es la actividad principal -->
         <activity
             android:name=".QuizActivity"
-            android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:exported="true"
+            android:screenOrientation="landscape">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
 
         <activity
             android:name=".ResultadoActivity"
             android:exported="false"
-            android:screenOrientation="landscape" />
-    </application>
+            android:screenOrientation="landscape">
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
+<!--            <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
+<!--        </intent-filter>/>-->
+        </activity>
+                </application>
 
-</manifest>
+            </manifest>
