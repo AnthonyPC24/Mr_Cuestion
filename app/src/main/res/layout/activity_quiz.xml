@@ -131,4 +131,15 @@
         android:src="@drawable/stars"
         android:adjustViewBounds="true" />
 
+    <ImageView
+        android:id="@+id/avatarJugador"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:contentDescription="Avatar del jugador" />
+
     </RelativeLayout>

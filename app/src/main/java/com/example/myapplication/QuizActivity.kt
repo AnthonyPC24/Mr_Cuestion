@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageView
@@ -10,6 +11,7 @@ import com.example.myapplication.util.AudioPlayer
 import org.json.JSONArray
 import com.bumptech.glide.Glide
 import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.view.View
 
 class QuizActivity : AppCompatActivity() {
@@ -32,10 +34,61 @@ class QuizActivity : AppCompatActivity() {
     private var respuestasCorrectas: Int = 0
     private val imagenesCorrectas = ArrayList<String>()
 
+    private var isRecording = false
+    private var recorder: MediaRecorder? = null
+    private var recordedFile: String? = null
+
+    private var currentQuestionText: String = ""
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
+
+        if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(android.Manifest.permission.RECORD_AUDIO), 200)
+        }
+
+
+        val avatarImagen = intent.getIntExtra("avatarImagen", R.drawable.avatar1)
+        val avatarView = findViewById<ImageView>(R.id.avatarJugador)
+        avatarView.setImageResource(avatarImagen)
+
+        avatarView.setOnClickListener {
+            val characterGif = findViewById<ImageView>(R.id.characterGif)
+
+            if (!isRecording) {
+                // 🎙️ Iniciar grabación
+                startRecording()
+
+                // 🔄 Cambiar la animación del personaje a "escuchando"
+                Glide.with(this).load(R.drawable.personaje_escuchando).into(characterGif)
+                questionText.text = "Soy todo oidos, chaval"
+
+            } else {
+                // 🛑 Detener grabación
+                stopRecording()
+
+                // 🔊 Cambiar a animación de "hablando" mientras reproduce
+                playWithEffect(
+                    onStartSpeaking = {
+                        Glide.with(this).load(R.drawable.personaje_hablando).into(characterGif)
+                        questionText.text = "¡Maravillosas palabras!"
+                    },
+                    onFinishSpeaking = {
+                        Glide.with(this).asGif().load(R.drawable.personaje_gif).into(characterGif)
+                        questionText.text = currentQuestionText
+                    }
+                              )
+            }
+
+            isRecording = !isRecording
+        }
+
+        val dificultad = intent.getStringExtra("DIFICULTAD") ?: "Fácil"
+        val numPreguntas = intent.getIntExtra("NUM_PREGUNTAS", 15)
+
 
         stars = listOf(
             findViewById(R.id.star1),
@@ -54,9 +107,19 @@ class QuizActivity : AppCompatActivity() {
             findViewById(R.id.star14),
             findViewById(R.id.star15)
                       )
+        stars.forEachIndexed { index, imageView ->
+            imageView.visibility = if (index < numPreguntas) View.VISIBLE else View.GONE
+        }
 
         // 🎵 Música de fondo
-        mediaPlayer = MediaPlayer.create(this, R.raw.musica_quizz_dificil)
+        val musicResId = when (dificultad) {
+            "Fácil" -> R.raw.musica_quizz_facil
+            "Medio" -> R.raw.musica_quizz_medio
+            "Difícil" -> R.raw.musica_quizz_dificil
+            else -> R.raw.musica_quizz_facil
+        }
+
+        mediaPlayer = MediaPlayer.create(this, musicResId)
         mediaPlayer.isLooping = true
         mediaPlayer.setVolume(1.0f, 1.0f)
         mediaPlayer.start()
@@ -69,6 +132,40 @@ class QuizActivity : AppCompatActivity() {
         val characterGif = findViewById<ImageView>(R.id.characterGif)
         Glide.with(this).asGif().load(R.drawable.personaje_gif).into(characterGif)
 
+        characterGif.setOnClickListener {
+
+            val textoOriginal = questionText.text.toString()
+
+
+            questionText.text = "¡OUCH!"
+
+            val reacciones = listOf(
+                R.drawable.personaje_golpeado,
+                R.drawable.personaje_golpeado2,
+                R.drawable.personaje_golpeado3
+                                   )
+            val reaccionAleatoria = reacciones.random()
+            Glide.with(this).load(reaccionAleatoria).into(characterGif)
+
+            val golpeSound = MediaPlayer.create(this, R.raw.golpe)
+            golpeSound.start()
+
+            characterGif.postDelayed({
+                                         Glide.with(this).asGif().load(R.drawable.personaje_gif).into(characterGif)
+                                         questionText.text = textoOriginal
+                                     }, 1500)
+
+
+            val shake = android.view.animation.TranslateAnimation(
+                -10f, 10f, 0f, 0f
+                                                                 ).apply {
+                duration = 50
+                repeatMode = android.view.animation.Animation.REVERSE
+                repeatCount = 5
+            }
+            characterGif.startAnimation(shake)
+        }
+
         // 🧩 Referencias UI
         questionText = findViewById(R.id.questionText)
         option1 = findViewById(R.id.option1)
@@ -76,38 +173,51 @@ class QuizActivity : AppCompatActivity() {
         option3 = findViewById(R.id.option3) //hola
 
         // 🔄 Cargar preguntas
-        questions = loadQuestions()
+        questions = loadQuestions(dificultad, numPreguntas)
+        totalPreguntas = numPreguntas
         showQuestion()
     }
 
     // Carga de preguntas desde questions.json
-    private fun loadQuestions(): List<Question> {
-        val json = resources.openRawResource(R.raw.hardquestions).bufferedReader().use { it.readText() }
+    private fun loadQuestions(dificultad: String, numPreguntas: Int): List<Question> {
+        val jsonResId = when (dificultad) {
+            "Fácil" -> R.raw.questions
+            "Medio" -> R.raw.mediumquestions
+            "Difícil" -> R.raw.hardquestions
+            else -> R.raw.questions
+        }
+
+        val json = resources.openRawResource(jsonResId).bufferedReader().use { it.readText() }
         val jsonArray = JSONArray(json)
         val result = mutableListOf<Question>()
 
         for (i in 0 until jsonArray.length()) {
             val obj = jsonArray.getJSONObject(i)
             val question = Question(
-                obj.getString("text"), obj.getString("audio"), listOf(
+                obj.getString("text"),
+                obj.getString("audio"),
+                listOf(
                     obj.getJSONArray("options").getString(0),
                     obj.getJSONArray("options").getString(1),
                     obj.getJSONArray("options").getString(2)
-                                                                     ), obj.getInt("correctIndex")
+                      ),
+                obj.getInt("correctIndex")
                                    )
             result.add(question)
         }
 
-        // 🔀 Mezclar aleatoriamente y tomar solo 15 preguntas
-        val seleccionadas = result.shuffled().take(15)
+        val seleccionadas = result.shuffled().take(numPreguntas)
         totalPreguntas = seleccionadas.size
         return seleccionadas
     }
+
+
 
     // Mostrar la pregunta actual
     private fun showQuestion() {
         val q = questions[currentIndex]
         questionText.text = q.text
+        currentQuestionText = q.text
         AudioPlayer.play(this, q.audio)
 
         val shuffledOptions = q.options.shuffled()
@@ -224,4 +334,67 @@ class QuizActivity : AppCompatActivity() {
                                    }, 1500)
         }
     }
+    private fun startRecording() {
+        recordedFile = "${externalCacheDir?.absolutePath}/voz_usuario.3gp"
+
+        recorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            setOutputFile(recordedFile)
+            prepare()
+            start()
+        }
+
+        questionText.text = "🎙️ Grabando... Habla ahora!"
+    }
+
+    private fun stopRecording() {
+        recorder?.apply {
+            stop()
+            release()
+        }
+        recorder = null
+    }
+
+    private fun playWithEffect(
+        onStartSpeaking: (() -> Unit)? = null,
+        onFinishSpeaking: (() -> Unit)? = null
+                              ) {
+        if (recordedFile == null) return
+
+        val player = MediaPlayer()
+        player.setDataSource(recordedFile)
+        player.prepare()
+
+        // 🎵 Ajuste de tono/velocidad (voz graciosa)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            val params = player.playbackParams
+            params.pitch = 1.9f
+            params.speed = 1.3f
+            player.playbackParams = params
+        }
+
+        // 🔊 Subir volumen de la voz
+        player.setVolume(1.0f, 1.0f)
+
+        // 🔇 Bajar o mutear la música de fondo mientras habla
+        mediaPlayer.setVolume(0.0f, 0.0f)
+
+        // 📢 Notificar inicio
+        onStartSpeaking?.invoke()
+        player.start()
+
+        // 📢 Cuando termina
+        player.setOnCompletionListener {
+            // Restaurar la música de fondo
+            mediaPlayer.setVolume(1.0f, 1.0f)
+
+            // Notificar que terminó de hablar
+            onFinishSpeaking?.invoke()
+            player.release()
+        }
+    }
+
+
 }

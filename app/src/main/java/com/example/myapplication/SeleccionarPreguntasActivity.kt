@@ -60,6 +60,8 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
     private fun mostrarSelectorDificultad(){
 
 
+
+
         val contenedor = findViewById<android.widget.FrameLayout>(R.id.contenedorOpciones)
         val layout = LayoutInflater.from(this).inflate(R.layout.layout_dificultad, contenedor, false)
         contenedor.removeAllViews()
@@ -87,23 +89,19 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Dificultad: $dificultad ⚡", Toast.LENGTH_SHORT).show()
 
-                //Guarda la partida en el Json
                 FilesManager.savePartida(this, partida)
 
-                //Se crea intent con los datos de la partida, el avatar, la dificultad, el numero de preguntas
-                // y la fecha y hora de inicio.
+                // 🔹 Lanzar QuizActivity con los datos seleccionados
                 val intent = Intent(this, QuizActivity::class.java)
-                intent.putExtra("avatar", partida.avatar)
-                intent.putExtra("numPreguntas", partida.numPreguntas)
-                intent.putExtra("dificultad", partida.dificultad)
-                intent.putExtra("FechaInicio", partida.fechaHoraInicio)
+                intent.putExtra("NUM_PREGUNTAS", numPreguntas)
+                intent.putExtra("DIFICULTAD", dificultad)
+                intent.putExtra("avatarNombre", avatarNombre)
+                intent.putExtra("avatarImagen", intent.getIntExtra("avatarImagen", R.drawable.avatar1))
 
-                //Opcion para que cambie de pantalla instantaneamente
                 startActivity(intent)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(0,0)
                 finish()
             }
+        }
         }
     }
 
@@ -119,4 +117,3 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
             repeatCount = ScaleAnimation.INFINITE
         }
     }
-}
