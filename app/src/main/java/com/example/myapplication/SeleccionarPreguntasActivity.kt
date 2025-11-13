@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -86,7 +87,22 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
 
                 Toast.makeText(this, "Dificultad: $dificultad ⚡", Toast.LENGTH_SHORT).show()
 
+                //Guarda la partida en el Json
                 FilesManager.savePartida(this, partida)
+
+                //Se crea intent con los datos de la partida, el avatar, la dificultad, el numero de preguntas
+                // y la fecha y hora de inicio.
+                val intent = Intent(this, QuizActivity::class.java)
+                intent.putExtra("avatar", partida.avatar)
+                intent.putExtra("numPreguntas", partida.numPreguntas)
+                intent.putExtra("dificultad", partida.dificultad)
+                intent.putExtra("FechaInicio", partida.fechaHoraInicio)
+
+                //Opcion para que cambie de pantalla instantaneamente
+                startActivity(intent)
+                @Suppress("DEPRECATION")
+                overridePendingTransition(0,0)
+                finish()
             }
         }
     }
