@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
     private var numPreguntas: Int = 0
     private var dificultad: String = ""
     private lateinit var nombreJugador: String
+
 
 
     override fun onCreate(savedInstanceState: Bundle? ) {

@@ -46,6 +46,8 @@ class QuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
 
+
+
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(android.Manifest.permission.RECORD_AUDIO), 200)
         }
@@ -119,10 +121,11 @@ class QuizActivity : AppCompatActivity() {
             else -> R.raw.musica_quizz_facil
         }
 
-        mediaPlayer = MediaPlayer.create(this, musicResId)
-        mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(1.0f, 1.0f)
-        mediaPlayer.start()
+// Pausar música global (la que venía del Main)
+        MusicManager.pause()
+
+// Reproducir música del quiz
+        MusicManager.play(this, musicResId)
 
         // 🔔 Sonidos de respuesta
         correctSound = MediaPlayer.create(this, R.raw.correct)
@@ -244,7 +247,7 @@ class QuizActivity : AppCompatActivity() {
 
     // Maneja la selección de respuesta
     private fun handleAnswer(isCorrect: Boolean, selectedView: ImageView) {
-        mediaPlayer.pause()
+        MusicManager.pause()
 
         if (isCorrect) {
             correctSound.start()
@@ -262,7 +265,7 @@ class QuizActivity : AppCompatActivity() {
 
         val soundToWait = if (isCorrect) correctSound else wrongSound
         soundToWait.setOnCompletionListener {
-            mediaPlayer.start()
+            MusicManager.resume() // Reanuda la música de fondo del Quiz
             if (currentIndex < questions.size - 1) {
                 currentIndex++
                 showQuestion()
@@ -276,7 +279,7 @@ class QuizActivity : AppCompatActivity() {
 
     // Fin del juego
     private fun finishGame() {
-        mediaPlayer.pause()
+        MusicManager.pause()
 
         val intent = Intent(this, ResultadoActivity::class.java)
         intent.putExtra("TOTAL_PREGUNTAS", totalPreguntas)
@@ -290,19 +293,22 @@ class QuizActivity : AppCompatActivity() {
     // Control del ciclo de vida
     override fun onPause() {
         super.onPause()
-        if (mediaPlayer.isPlaying) mediaPlayer.pause()
+        MusicManager.pause() // Pausa música mientras la Activity no está visible
     }
 
     override fun onResume() {
         super.onResume()
-        if (!mediaPlayer.isPlaying) mediaPlayer.start()
+        MusicManager.resume() // Reanuda música
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
         correctSound.release()
         wrongSound.release()
+        // Detener música del quiz
+        MusicManager.stop(this)
+        // Opcional: volver a reproducir música del Main
+        MusicManager.play(this, R.raw.musica_main)
     }
 
     private fun updateStars(index: Int, isCorrect: Boolean) {
