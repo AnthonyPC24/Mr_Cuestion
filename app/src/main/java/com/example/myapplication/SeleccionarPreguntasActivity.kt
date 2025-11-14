@@ -23,13 +23,16 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
     private lateinit var avatarNombre: String
     private var numPreguntas: Int = 0
     private var dificultad: String = ""
+    private lateinit var nombreJugador: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onCreate(savedInstanceState: Bundle? ) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_seleccionar_preguntas)
 
         avatarNombre = intent.getStringExtra("avatarNombre")?:"avatar_desconocido"
+        nombreJugador = intent.getStringExtra("nombreJugador") ?: "Jugador"
 
         mostrarSelectorPregutnas()
     }
@@ -138,6 +141,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
 
                 val partida = Partida(
                     avatar = avatarNombre,
+                    nombreJugador =nombreJugador,
                     numPreguntas = numPreguntas,
                     dificultad = dificultad
                                      )
@@ -150,6 +154,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
                 intent.putExtra("NUM_PREGUNTAS", numPreguntas)
                 intent.putExtra("DIFICULTAD", dificultad)
                 intent.putExtra("avatarNombre", avatarNombre)
+                intent.putExtra("nombreJugador", nombreJugador)
                 intent.putExtra("avatarImagen", intent.getIntExtra("avatarImagen", R.drawable.avatar1))
 
                 startActivity(intent)

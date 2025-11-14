@@ -13,11 +13,15 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.content.pm.PackageManager
+import android.view.LayoutInflater
 import android.view.animation.ScaleAnimation
+import androidx.constraintlayout.widget.ConstraintSet
 import org.json.JSONArray
 import com.example.myapplication.model.Avatar
 import com.example.myapplication.model.FilesManager
 import com.example.myapplication.model.Partida
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 
 
 class SeleccionarAvatarActivity : AppCompatActivity() {
@@ -54,20 +58,47 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
 
             imageView.setOnClickListener {
 
-                val intent = Intent(this, SeleccionarPreguntasActivity::class.java)
-
-                intent.putExtra("avatarNombre", avatar.nombre)
-                intent.putExtra("avatarImagen", avatar.imagen)
-
-                Toast.makeText(this, "Elegiste ${avatar.nombre} 🎉", Toast.LENGTH_SHORT).show()
-                //Opcion para que cambie de pantalla instantaneamente
-                startActivity(intent)
-                @Suppress("DEPRECATION")
-                overridePendingTransition(0,0)
-                finish()
+                mostrarDialogoNombreJugador(avatar)
             }
         }
     }
+}
+
+private fun SeleccionarAvatarActivity.mostrarDialogoNombreJugador(avatar: Avatar) {
+    val dialogView = LayoutInflater.from(this)
+        .inflate(R.layout.dialog_nombre_jugador, null)
+
+    val inputNombre = dialogView.findViewById<EditText>(R.id.etNombreJugador)
+
+    AlertDialog.Builder(this)
+        .setTitle("Nombre del jugador")
+        .setView(dialogView)
+        .setCancelable(false)
+        .setPositiveButton("Aceptar") { _, _ ->
+            val nombreJugador = inputNombre.text.toString().trim()
+
+            if (nombreJugador.isEmpty()) {
+                Toast.makeText(this, "Debes introducir un nombre", Toast.LENGTH_SHORT).show()
+            }
+
+            // Pasamos avatar + nombre del jugador
+            val intent = Intent(this, SeleccionarPreguntasActivity::class.java)
+            intent.putExtra("avatarNombre", avatar.nombre)
+            intent.putExtra("avatarImagen", avatar.imagen)
+            intent.putExtra("nombreJugador", nombreJugador)
+
+            Toast.makeText(
+                this,
+                "Jugador: $nombreJugador\nAvatar: ${avatar.nombre}",
+                Toast.LENGTH_SHORT
+                          ).show()
+
+            startActivity(intent)
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
+            finish()
+        }
+        .show()
 }
 
 
