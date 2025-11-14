@@ -16,25 +16,39 @@
         android:background="@android:color/transparent"
         android:contentDescription="Fácil"
         android:scaleType="centerCrop"
-        android:src="@drawable/facil" />
+        android:src="@drawable/boton_facil" />
 
     <ImageButton
         android:id="@+id/btnMedia"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/medio"
+        android:src="@drawable/boton_medio"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:layout_marginHorizontal="16dp"
         android:contentDescription="Media"/>
 
-    <ImageButton
-        android:id="@+id/btnDificil"
+    <FrameLayout
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/facil"
-        android:scaleType="centerCrop"
-        android:background="@android:color/transparent"
-        android:contentDescription="Difícil"/>
+        android:layout_marginHorizontal="8dp">
+
+        <ImageView
+            android:id="@+id/bgLlama"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/flames"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:id="@+id/btnDificil"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/boton_dificil"
+            android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:contentDescription="Difícil"/>
+
+    </FrameLayout>
 
 </LinearLayout>
