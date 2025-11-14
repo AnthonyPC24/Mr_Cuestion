@@ -22,27 +22,39 @@
         android:contentDescription="Personaje" />
 
     <!-- Bocadillo con el texto del resultado -->
+    <!-- Bocadillo con el texto del resultado -->
     <LinearLayout
         android:id="@+id/speechBubbleContainer"
-        android:layout_width="350dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/characterGif"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bocadillo2"
-        android:padding="16dp"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="top|center_horizontal"
+        android:paddingHorizontal="1dp"
+        android:paddingVertical="8dp"
+        android:minWidth="10dp"
+        android:maxWidth="10dp"
+        android:adjustViewBounds="true"
+        android:clipToPadding="false">
 
         <TextView
             android:id="@+id/textResultado"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¡Has acertado 10 de 15!"
-            android:textSize="22sp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="¡Has acertado 15 de 15!"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000000"
-            android:gravity="center" />
+            android:singleLine="false"
+            android:lineSpacingExtra="2dp"
+            android:includeFontPadding="false"
+            android:paddingTop="30dp"/>
     </LinearLayout>
+
 
 </RelativeLayout>
