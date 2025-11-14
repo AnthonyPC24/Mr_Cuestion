@@ -6,6 +6,7 @@ import java.util.*
 
 data class Partida(
     var avatar: String,
+    var nombreJugador: String = "",
     var numPreguntas: Int = 0,
     var dificultad: String = "",
     var puntuacion: Int = 0,
