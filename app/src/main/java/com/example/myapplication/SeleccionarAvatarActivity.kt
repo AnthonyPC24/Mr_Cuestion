@@ -31,12 +31,12 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
         tapSound = MediaPlayer.create(this, R.raw.tap)
 
         val avatares = listOf(
-            Avatar(R.id.avatar1, "avatar1", R.drawable.avatar1),
-            Avatar(R.id.avatar2, "avatar2", R.drawable.avatar2),
-            Avatar(R.id.avatar3, "avatar3", R.drawable.avatar3),
-            Avatar(R.id.avatar4, "avatar4", R.drawable.avatar4),
-            Avatar(R.id.avatar5, "avatar5", R.drawable.avatar5),
-            Avatar(R.id.avatar6, "avatar6", R.drawable.avatar6)
+            Avatar(R.id.avatar1, "Cappuccino Assassino", R.drawable.avatar1),
+            Avatar(R.id.avatar2, "Brr Brr Patapim", R.drawable.avatar2),
+            Avatar(R.id.avatar3, "Ballerina Cappuccina", R.drawable.avatar3),
+            Avatar(R.id.avatar4, " Orangutan Ananasini", R.drawable.avatar4),
+            Avatar(R.id.avatar5, "Cocofanto Elefanto", R.drawable.avatar5),
+            Avatar(R.id.avatar6, "Tung Tung Sahur", R.drawable.avatar6)
                              )
 
         // 🎞️ Animación de movimiento de los avatares
