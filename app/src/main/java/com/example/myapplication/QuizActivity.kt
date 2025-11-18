@@ -385,7 +385,8 @@ class QuizActivity : AppCompatActivity() {
         player.setVolume(1.0f, 1.0f)
 
         // 🔇 Bajar o mutear la música de fondo mientras habla
-        mediaPlayer.setVolume(0.0f, 0.0f)
+        MusicManager.mute()
+
 
         // 📢 Notificar inicio
         onStartSpeaking?.invoke()
@@ -394,7 +395,7 @@ class QuizActivity : AppCompatActivity() {
         // 📢 Cuando termina
         player.setOnCompletionListener {
             // Restaurar la música de fondo
-            mediaPlayer.setVolume(1.0f, 1.0f)
+            MusicManager.unmute()
 
             // Notificar que terminó de hablar
             onFinishSpeaking?.invoke()

@@ -54,7 +54,38 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
         val anim = crearAnimacion()
 
         botones.forEach { (boton, cantidad) ->
+            // Animación de rebote inicial
             boton.startAnimation(anim)
+
+            boton.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        // Cambiar sprite al presionado según el botón
+                        when (cantidad) {
+                            5 -> boton.setImageResource(R.drawable.boton_cinco_presionado)
+                            10 -> boton.setImageResource(R.drawable.boton_diez_presionado)
+                            15 -> boton.setImageResource(R.drawable.boton_quince_presionado)
+                        }
+                    }
+
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        // Volver al sprite normal
+                        when (cantidad) {
+                            5 -> boton.setImageResource(R.drawable.boton_cinco)
+                            10 -> boton.setImageResource(R.drawable.boton_diez)
+                            15 -> boton.setImageResource(R.drawable.boton_quince)
+                        }
+
+                        // Solo ejecutar click si fue ACTION_UP
+                        if (event.action == MotionEvent.ACTION_UP) {
+                            boton.performClick()
+                        }
+                    }
+                }
+                true
+            }
+
+
             boton.setOnClickListener {
                 numPreguntas = cantidad
                 Toast.makeText(this, "Elegiste $cantidad preguntas", Toast.LENGTH_SHORT).show()

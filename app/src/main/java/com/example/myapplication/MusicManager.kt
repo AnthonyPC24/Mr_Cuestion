@@ -35,4 +35,17 @@ object MusicManager {
         mediaPlayer = null
         currentResId = null
     }
+
+    fun setVolume(left: Float, right: Float) {
+        mediaPlayer?.setVolume(left, right)
+    }
+
+    fun mute() {
+        mediaPlayer?.setVolume(0f, 0f)
+    }
+
+    fun unmute() {
+        mediaPlayer?.setVolume(1f, 1f)
+    }
+
 }

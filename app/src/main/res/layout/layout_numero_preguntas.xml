@@ -9,30 +9,30 @@
     android:layout_gravity="center"
     android:layout_marginTop="200dp">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn5"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@android:color/transparent"
         android:contentDescription="5 preguntas"
         android:scaleType="centerCrop"
-        android:src="@drawable/boton5" />
+        android:src="@drawable/boton_cinco" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn10"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/boton10"
+        android:src="@drawable/boton_diez"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         android:layout_marginHorizontal="16dp"
         android:contentDescription="10 preguntas"/>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn15"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/boton15"
+        android:src="@drawable/boton_quince"
         android:scaleType="fitXY"
         android:background="@android:color/transparent"
         android:contentDescription="15 preguntas"/>
