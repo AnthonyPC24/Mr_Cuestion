@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,70 +12,92 @@ import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
 
-    // Arreglo de GIFs para el personaje
+    private lateinit var tapSound: MediaPlayer
+
     private val gifs = arrayOf(
         R.drawable.tenna_cane, R.drawable.tenna_spinning, R.drawable.personaje_gif
                               )
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-
+        // 🎵 Música de fondo
         MusicManager.play(this, R.raw.musica_main)
 
+        // 🔊 Sonido del botón
+        tapSound = MediaPlayer.create(this, R.raw.tap)
+
         val personaje = findViewById<ImageView>(R.id.personaje)
-
-        // Cargar un GIF aleatorio inicialmente
-        Glide.with(this).asGif().load(gifs.random()).into(personaje)
-
         val btnInicio = findViewById<ImageView>(R.id.btnInicio)
 
-        // Animación de "pulso" para el botón
+        // Mostrar GIF aleatorio
+        Glide.with(this).asGif().load(gifs.random()).into(personaje)
+
+        // --- Animación de pulso ---
         val scaleAnimation = ScaleAnimation(
-            1f, 1.1f, // Escala X de 1 a 1.1
-            1f, 1.1f, // Escala Y de 1 a 1.1
-            ScaleAnimation.RELATIVE_TO_SELF, 0.5f, // Centro X
-            ScaleAnimation.RELATIVE_TO_SELF, 0.5f  // Centro Y
+            1f, 1.1f,
+            1f, 1.1f,
+            ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+            ScaleAnimation.RELATIVE_TO_SELF, 0.5f
                                            ).apply {
             duration = 1000
             repeatMode = ScaleAnimation.REVERSE
             repeatCount = ScaleAnimation.INFINITE
         }
 
-        // Inicia la animación del botón
         btnInicio.startAnimation(scaleAnimation)
 
-        // Inicia el movimiento aleatorio del personaje
-        moverPersonajeAleatorio()
+        // --- EFECTO DE BOTÓN PRESIONADO + SONIDO ---
+        btnInicio.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    btnInicio.setImageResource(R.drawable.boton_inicio_presionado)
 
-        // Al hacer clic, detener animación y pasar a la siguiente pantalla
+                    // 🔊 Reproducir sonido TAP
+                    if (tapSound.isPlaying) {
+                        tapSound.seekTo(0)
+                    }
+                    tapSound.start()
+                }
+
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    btnInicio.setImageResource(R.drawable.boton_inicio)
+
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        btnInicio.performClick()
+                    }
+                }
+            }
+            true
+        }
+
+        // --- CLICK PARA CAMBIAR DE ACTIVITY ---
         btnInicio.setOnClickListener {
             btnInicio.clearAnimation()
             val intent = Intent(this, SeleccionarAvatarActivity::class.java)
             startActivity(intent)
-            @Suppress("DEPRECATION") overridePendingTransition(0, 0)
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
             finish()
         }
+
+        moverPersonajeAleatorio()
     }
 
+    // --- MOVIMIENTO DEL PERSONAJE ---
     private fun moverPersonajeAleatorio() {
         val personaje = findViewById<ImageView>(R.id.personaje)
 
         val pantallaAncho = resources.displayMetrics.widthPixels
         val pantallaAlto = resources.displayMetrics.heightPixels
 
-        // Área prohibida (donde está el título del juego)
         val zonaProhibidaTop = 0
-        val zonaProhibidaBottom = pantallaAlto * 0.35  // 35% desde arriba
+        val zonaProhibidaBottom = pantallaAlto * 0.35
 
         personaje.visibility = ImageView.VISIBLE
 
-        // Elige un lado aleatorio de donde aparecer
         val lado = (1..4).random()
         var startX = 0f
         var startY = 0f
@@ -96,23 +119,16 @@ class MainActivity : AppCompatActivity() {
         val endX = (100..(pantallaAncho - 200)).random().toFloat()
         val endY = ((zonaProhibidaBottom.toInt() + 100)..(pantallaAlto - 200)).random().toFloat()
 
-        // Inicia animación hacia el destino
         personaje.animate().x(endX).y(endY).setDuration(2000).withEndAction {
 
-            // Animar salida hacia afuera
             val salidaX = if ((0..1).random() == 0) -300f else pantallaAncho + 300f
             val salidaY = (0..pantallaAlto).random().toFloat()
 
             personaje.animate().x(salidaX).y(salidaY).setDuration(2000).withEndAction {
-
-                // Solo cargar Glide si la Activity sigue activa
                 if (!isFinishing && !isDestroyed) {
                     Glide.with(this).asGif().load(gifs.random()).into(personaje)
-
-                    // Reiniciar movimiento
                     moverPersonajeAleatorio()
                 }
-
             }.start()
         }
     }

@@ -308,7 +308,7 @@ class QuizActivity : AppCompatActivity() {
         // Detener música del quiz
         MusicManager.stop(this)
         // Opcional: volver a reproducir música del Main
-        MusicManager.play(this, R.raw.musica_main)
+
     }
 
     private fun updateStars(index: Int, isCorrect: Boolean) {

@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.animation.LinearInterpolator
@@ -13,19 +14,48 @@ import com.bumptech.glide.Glide
 import kotlin.math.cos
 import kotlin.math.sin
 
+
+
 class ResultadoActivity : AppCompatActivity() {
 
+    private lateinit var clickSound: MediaPlayer
     private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resultado)
 
+        clickSound = MediaPlayer.create(this, R.raw.tap)
+        clickSound.setVolume(1.0f, 1.0f)
+
         mediaPlayer = MediaPlayer.create(this, R.raw.resultados)
         mediaPlayer.isLooping = true
         mediaPlayer.setVolume(1.0f, 1.0f)
         mediaPlayer.start()
 
+        val btnReintentar = findViewById<ImageView>(R.id.btnReintentar)
+
+        btnReintentar.setOnTouchListener { view, event ->
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    btnReintentar.setImageResource(R.drawable.boton_volver_a_jugar_presionado)
+                    clickSound.start()
+                }
+                android.view.MotionEvent.ACTION_UP,
+                android.view.MotionEvent.ACTION_CANCEL -> {
+                    btnReintentar.setImageResource(R.drawable.boton_volver_a_jugar)
+                    // Acción al soltar: volver al MainActivity
+                    mediaPlayer.stop()
+                    mediaPlayer.release()
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            true
+        }
 
         val textResultado = findViewById<TextView>(R.id.textResultado)
         val orbitContainer = findViewById<FrameLayout>(R.id.orbitContainer)

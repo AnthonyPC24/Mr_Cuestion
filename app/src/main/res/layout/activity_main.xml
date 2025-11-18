@@ -12,7 +12,7 @@
         android:id="@+id/btnInicio"
         android:layout_width="423dp"
         android:layout_height="334dp"
-        android:src="@drawable/btninicio"
+        android:src="@drawable/boton_inicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
