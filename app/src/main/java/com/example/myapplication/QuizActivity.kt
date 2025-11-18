@@ -13,6 +13,10 @@ import com.bumptech.glide.Glide
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.view.View
+import com.example.myapplication.model.FilesManager
+import com.example.myapplication.model.Partida
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class QuizActivity : AppCompatActivity() {
 
@@ -45,6 +49,8 @@ class QuizActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
+
+        val partidaId = intent.getLongExtra("PARTIDA_ID", -1L)
 
 
 
@@ -281,14 +287,64 @@ class QuizActivity : AppCompatActivity() {
     private fun finishGame() {
         MusicManager.pause()
 
+        val partidas = FilesManager.loadPartidas(this).toMutableList()
+        val nombreJugador = intent.getStringExtra("nombreJugador") ?: "Jugador"
+
+        // Buscar la última partida de este jugador
+        val index = partidas.indexOfLast { it.nombreJugador == nombreJugador }
+
+        if (index != -1) {
+            val partida = partidas[index]
+            val errores = totalPreguntas - respuestasCorrectas
+            val tiempoPartida = calcularTiempoPartida(partida.fechaHoraInicio)
+
+            // Actualizar la partida existente
+            partidas[index] = partida.copy(
+                puntuacion = respuestasCorrectas,
+                errores = errores,
+                tiempoPartida = tiempoPartida
+                                          )
+        } else {
+            // Si no existe ninguna, crear nueva
+            val nuevaPartida = Partida(
+                avatar = intent.getStringExtra("avatarNombre") ?: "avatar_desconocido",
+                nombreJugador = nombreJugador,
+                numPreguntas = totalPreguntas,
+                dificultad = intent.getStringExtra("DIFICULTAD") ?: "Fácil",
+                puntuacion = respuestasCorrectas,
+                errores = totalPreguntas - respuestasCorrectas,
+                tiempoPartida = calcularTiempoPartida(Partida.obtenerFechaActual())
+                                      )
+            partidas.add(nuevaPartida)
+        }
+
+        FilesManager.savePartidas(this, partidas)
+
         val intent = Intent(this, ResultadoActivity::class.java)
         intent.putExtra("TOTAL_PREGUNTAS", totalPreguntas)
         intent.putExtra("RESPUESTAS_CORRECTAS", respuestasCorrectas)
         intent.putStringArrayListExtra("CORRECT_IMAGES", imagenesCorrectas)
-
         startActivity(intent)
         finish()
     }
+
+
+    // Función para calcular tiempo de partida en formato "mm:ss"
+    private fun calcularTiempoPartida(fechaInicio: String): String {
+        val formato = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val inicio = formato.parse(fechaInicio)?.time ?: System.currentTimeMillis()
+        val fin = System.currentTimeMillis()
+        val diff = fin - inicio // diferencia en milisegundos
+
+        val minutos = (diff / 1000 / 60).toInt()
+        val segundos = ((diff / 1000) % 60).toInt()
+
+        return String.format("%02d:%02d", minutos, segundos)
+    }
+
+
+
+
 
     // Control del ciclo de vida
     override fun onPause() {

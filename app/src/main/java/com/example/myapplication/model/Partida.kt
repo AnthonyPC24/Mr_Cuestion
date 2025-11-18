@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class Partida(
+    val id: Long = System.currentTimeMillis(),
     var avatar: String,
     var nombreJugador: String = "",
     var numPreguntas: Int = 0,
