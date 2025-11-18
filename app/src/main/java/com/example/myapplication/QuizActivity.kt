@@ -13,6 +13,10 @@ import com.bumptech.glide.Glide
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.view.View
+import com.example.myapplication.model.FilesManager
+import com.example.myapplication.model.Partida
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class QuizActivity : AppCompatActivity() {
 
@@ -45,6 +49,10 @@ class QuizActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz)
+
+        val partidaId = intent.getLongExtra("PARTIDA_ID", -1L)
+
+
 
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(android.Manifest.permission.RECORD_AUDIO), 200)
@@ -119,10 +127,11 @@ class QuizActivity : AppCompatActivity() {
             else -> R.raw.musica_quizz_facil
         }
 
-        mediaPlayer = MediaPlayer.create(this, musicResId)
-        mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(1.0f, 1.0f)
-        mediaPlayer.start()
+// Pausar música global (la que venía del Main)
+        MusicManager.pause()
+
+// Reproducir música del quiz
+        MusicManager.play(this, musicResId)
 
         // 🔔 Sonidos de respuesta
         correctSound = MediaPlayer.create(this, R.raw.correct)
@@ -244,7 +253,7 @@ class QuizActivity : AppCompatActivity() {
 
     // Maneja la selección de respuesta
     private fun handleAnswer(isCorrect: Boolean, selectedView: ImageView) {
-        mediaPlayer.pause()
+        MusicManager.pause()
 
         if (isCorrect) {
             correctSound.start()
@@ -262,7 +271,7 @@ class QuizActivity : AppCompatActivity() {
 
         val soundToWait = if (isCorrect) correctSound else wrongSound
         soundToWait.setOnCompletionListener {
-            mediaPlayer.start()
+            MusicManager.resume() // Reanuda la música de fondo del Quiz
             if (currentIndex < questions.size - 1) {
                 currentIndex++
                 showQuestion()
@@ -276,33 +285,86 @@ class QuizActivity : AppCompatActivity() {
 
     // Fin del juego
     private fun finishGame() {
-        mediaPlayer.pause()
+        MusicManager.pause()
+
+        val partidas = FilesManager.loadPartidas(this).toMutableList()
+        val nombreJugador = intent.getStringExtra("nombreJugador") ?: "Jugador"
+
+        // Buscar la última partida de este jugador
+        val index = partidas.indexOfLast { it.nombreJugador == nombreJugador }
+
+        if (index != -1) {
+            val partida = partidas[index]
+            val errores = totalPreguntas - respuestasCorrectas
+            val tiempoPartida = calcularTiempoPartida(partida.fechaHoraInicio)
+
+            // Actualizar la partida existente
+            partidas[index] = partida.copy(
+                puntuacion = respuestasCorrectas,
+                errores = errores,
+                tiempoPartida = tiempoPartida
+                                          )
+        } else {
+            // Si no existe ninguna, crear nueva
+            val nuevaPartida = Partida(
+                avatar = intent.getStringExtra("avatarNombre") ?: "avatar_desconocido",
+                nombreJugador = nombreJugador,
+                numPreguntas = totalPreguntas,
+                dificultad = intent.getStringExtra("DIFICULTAD") ?: "Fácil",
+                puntuacion = respuestasCorrectas,
+                errores = totalPreguntas - respuestasCorrectas,
+                tiempoPartida = calcularTiempoPartida(Partida.obtenerFechaActual())
+                                      )
+            partidas.add(nuevaPartida)
+        }
+
+        FilesManager.savePartidas(this, partidas)
 
         val intent = Intent(this, ResultadoActivity::class.java)
         intent.putExtra("TOTAL_PREGUNTAS", totalPreguntas)
         intent.putExtra("RESPUESTAS_CORRECTAS", respuestasCorrectas)
         intent.putStringArrayListExtra("CORRECT_IMAGES", imagenesCorrectas)
-
         startActivity(intent)
         finish()
     }
 
+
+    // Función para calcular tiempo de partida en formato "mm:ss"
+    private fun calcularTiempoPartida(fechaInicio: String): String {
+        val formato = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val inicio = formato.parse(fechaInicio)?.time ?: System.currentTimeMillis()
+        val fin = System.currentTimeMillis()
+        val diff = fin - inicio // diferencia en milisegundos
+
+        val minutos = (diff / 1000 / 60).toInt()
+        val segundos = ((diff / 1000) % 60).toInt()
+
+        return String.format("%02d:%02d", minutos, segundos)
+    }
+
+
+
+
+
     // Control del ciclo de vida
     override fun onPause() {
         super.onPause()
-        if (mediaPlayer.isPlaying) mediaPlayer.pause()
+        MusicManager.pause() // Pausa música mientras la Activity no está visible
     }
 
     override fun onResume() {
         super.onResume()
-        if (!mediaPlayer.isPlaying) mediaPlayer.start()
+        MusicManager.resume() // Reanuda música
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
         correctSound.release()
         wrongSound.release()
+        // Detener música del quiz
+        MusicManager.stop(this)
+        // Opcional: volver a reproducir música del Main
+
     }
 
     private fun updateStars(index: Int, isCorrect: Boolean) {
@@ -379,7 +441,8 @@ class QuizActivity : AppCompatActivity() {
         player.setVolume(1.0f, 1.0f)
 
         // 🔇 Bajar o mutear la música de fondo mientras habla
-        mediaPlayer.setVolume(0.0f, 0.0f)
+        MusicManager.mute()
+
 
         // 📢 Notificar inicio
         onStartSpeaking?.invoke()
@@ -388,7 +451,7 @@ class QuizActivity : AppCompatActivity() {
         // 📢 Cuando termina
         player.setOnCompletionListener {
             // Restaurar la música de fondo
-            mediaPlayer.setVolume(1.0f, 1.0f)
+            MusicManager.unmute()
 
             // Notificar que terminó de hablar
             onFinishSpeaking?.invoke()

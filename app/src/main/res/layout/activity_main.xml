@@ -12,7 +12,7 @@
         android:id="@+id/btnInicio"
         android:layout_width="423dp"
         android:layout_height="334dp"
-        android:src="@drawable/btninicio"
+        android:src="@drawable/boton_inicio"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +21,8 @@
 
     <ImageView
         android:id="@+id/personaje"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
         android:src="@drawable/tenna_cane"
         android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent"

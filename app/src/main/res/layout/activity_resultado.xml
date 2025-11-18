@@ -56,5 +56,18 @@
             android:paddingTop="30dp"/>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/btnReintentar"
+        android:layout_width="290dp"
+        android:layout_height="290dp"
+        android:src="@drawable/boton_volver_a_jugar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+
+
 
 </RelativeLayout>

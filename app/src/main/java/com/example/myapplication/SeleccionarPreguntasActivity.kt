@@ -1,40 +1,49 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.model.Partida
-import android.view.animation.ScaleAnimation
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.myapplication.model.FilesManager
-import org.json.JSONArray
+import com.example.myapplication.model.Partida
 import java.io.File
-
+import org.json.JSONArray
+import android.view.animation.ScaleAnimation
 
 class SeleccionarPreguntasActivity : AppCompatActivity() {
-
 
     private lateinit var avatarNombre: String
     private var numPreguntas: Int = 0
     private var dificultad: String = ""
     private lateinit var nombreJugador: String
 
+    private lateinit var tapSound: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle? ) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_seleccionar_preguntas)
 
-        avatarNombre = intent.getStringExtra("avatarNombre")?:"avatar_desconocido"
+        avatarNombre = intent.getStringExtra("avatarNombre") ?: "avatar_desconocido"
         nombreJugador = intent.getStringExtra("nombreJugador") ?: "Jugador"
 
+        // 🔊 Inicializar sonido tap
+        tapSound = MediaPlayer.create(this, R.raw.tap)
+
         mostrarSelectorPregutnas()
+    }
+
+    private fun reproducirTap() {
+        if (tapSound.isPlaying) {
+            tapSound.seekTo(0)
+        }
+        tapSound.start()
     }
 
     private fun mostrarSelectorPregutnas() {
@@ -43,27 +52,52 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
         contenedor.removeAllViews()
         contenedor.addView(layout)
 
-        //Variables de los botones
         val botones = listOf(
             layout.findViewById<ImageView>(R.id.btn5) to 5,
             layout.findViewById<ImageView>(R.id.btn10) to 10,
-            layout.findViewById<ImageView>(R.id.btn15) to 15)
+            layout.findViewById<ImageView>(R.id.btn15) to 15
+                            )
 
         val anim = crearAnimacion()
 
         botones.forEach { (boton, cantidad) ->
             boton.startAnimation(anim)
+
+            boton.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        // 🔊 Sonido al pulsar
+                        reproducirTap()
+
+                        when (cantidad) {
+                            5 -> boton.setImageResource(R.drawable.boton_cinco_presionado)
+                            10 -> boton.setImageResource(R.drawable.boton_diez_presionado)
+                            15 -> boton.setImageResource(R.drawable.boton_quince_presionado)
+                        }
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        when (cantidad) {
+                            5 -> boton.setImageResource(R.drawable.boton_cinco)
+                            10 -> boton.setImageResource(R.drawable.boton_diez)
+                            15 -> boton.setImageResource(R.drawable.boton_quince)
+                        }
+                        if (event.action == MotionEvent.ACTION_UP) {
+                            boton.performClick()
+                        }
+                    }
+                }
+                true
+            }
+
             boton.setOnClickListener {
                 numPreguntas = cantidad
                 Toast.makeText(this, "Elegiste $cantidad preguntas", Toast.LENGTH_SHORT).show()
                 mostrarSelectorDificultad()
             }
         }
-
     }
 
     private fun mostrarSelectorDificultad() {
-
         val contenedor = findViewById<android.widget.FrameLayout>(R.id.contenedorOpciones)
         val layout = LayoutInflater.from(this).inflate(R.layout.layout_dificultad, contenedor, false)
         contenedor.removeAllViews()
@@ -73,62 +107,17 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
         val btnMedio = layout.findViewById<ImageView>(R.id.btnMedia)
         val btnDificil = layout.findViewById<ImageView>(R.id.btnDificil)
 
-        // ----------- BOTÓN FÁCIL -----------
-        btnFacil.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN ->
-                    btnFacil.setImageResource(R.drawable.boton_facil_presionado)
-
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    btnFacil.setImageResource(R.drawable.boton_facil)
-                    btnFacil.performClick()
-                }
-            }
-            true
-        }
-
-        // ----------- BOTÓN MEDIO -----------
-        btnMedio.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN ->
-                    btnMedio.setImageResource(R.drawable.boton_medio_presionado)
-
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    btnMedio.setImageResource(R.drawable.boton_medio)
-                    btnMedio.performClick()
-                }
-            }
-            true
-        }
-
-        // ----------- BOTÓN DIFÍCIL -----------
-        btnDificil.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN ->
-                    btnDificil.setImageResource(R.drawable.boton_dificil_presionado)
-
-                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    btnDificil.setImageResource(R.drawable.boton_dificil)
-                    btnDificil.performClick()
-                }
-            }
-            true
-        }
-
-        // Animación
         val anim = crearAnimacion()
         btnFacil.startAnimation(anim)
         btnMedio.startAnimation(anim)
         btnDificil.startAnimation(anim)
 
         val bgLlama = layout.findViewById<ImageView>(R.id.bgLlama)
-
         Glide.with(this)
             .asGif()
             .load(R.drawable.flames)
             .into(bgLlama)
 
-        // MAPA DE ACCIONES AL PULSAR
         val botones = mapOf(
             btnFacil to "Fácil",
             btnMedio to "Medio",
@@ -136,18 +125,42 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
                            )
 
         botones.forEach { (boton, dificultadElegida) ->
+
+            boton.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        reproducirTap()  // 🔊 Sonido
+                        when (dificultadElegida) {
+                            "Fácil" -> boton.setImageResource(R.drawable.boton_facil_presionado)
+                            "Medio" -> boton.setImageResource(R.drawable.boton_medio_presionado)
+                            "Difícil" -> boton.setImageResource(R.drawable.boton_dificil_presionado)
+                        }
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        when (dificultadElegida) {
+                            "Fácil" -> boton.setImageResource(R.drawable.boton_facil)
+                            "Medio" -> boton.setImageResource(R.drawable.boton_medio)
+                            "Difícil" -> boton.setImageResource(R.drawable.boton_dificil)
+                        }
+                        if (event.action == MotionEvent.ACTION_UP) {
+                            boton.performClick()
+                        }
+                    }
+                }
+                true
+            }
+
             boton.setOnClickListener {
                 dificultad = dificultadElegida
 
                 val partida = Partida(
                     avatar = avatarNombre,
-                    nombreJugador =nombreJugador,
+                    nombreJugador = nombreJugador,
                     numPreguntas = numPreguntas,
                     dificultad = dificultad
                                      )
 
                 Toast.makeText(this, "Dificultad: $dificultad ⚡", Toast.LENGTH_SHORT).show()
-
                 FilesManager.savePartida(this, partida)
 
                 val intent = Intent(this, QuizActivity::class.java)
@@ -163,8 +176,6 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
         }
     }
 
-}
-
     private fun crearAnimacion(): ScaleAnimation {
         return ScaleAnimation(
             1f, 1.1f,
@@ -177,3 +188,4 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
             repeatCount = ScaleAnimation.INFINITE
         }
     }
+}
