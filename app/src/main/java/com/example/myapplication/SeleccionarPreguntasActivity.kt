@@ -23,6 +23,10 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
     private var dificultad: String = ""
     private lateinit var nombreJugador: String
 
+    private var avatarImagen: Int = 0
+    private lateinit var avatarImagenName: String
+
+
     private lateinit var tapSound: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle? ) {
@@ -32,6 +36,9 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
 
         avatarNombre = intent.getStringExtra("avatarNombre") ?: "avatar_desconocido"
         nombreJugador = intent.getStringExtra("nombreJugador") ?: "Jugador"
+
+        avatarImagen = intent.getIntExtra("avatarImagen", R.drawable.avatar1)
+        avatarImagenName = intent.getStringExtra("avatarImagenName") ?: "avatar_desconocido"
 
         // 🔊 Inicializar sonido tap
         tapSound = MediaPlayer.create(this, R.raw.tap)
@@ -154,7 +161,7 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
                 dificultad = dificultadElegida
 
                 val partida = Partida(
-                    avatar = avatarNombre,
+                    avatar = avatarImagenName.substringBeforeLast("."),
                     nombreJugador = nombreJugador,
                     numPreguntas = numPreguntas,
                     dificultad = dificultad
@@ -164,14 +171,18 @@ class SeleccionarPreguntasActivity : AppCompatActivity() {
                 FilesManager.savePartida(this, partida)
 
                 val intent = Intent(this, QuizActivity::class.java)
+
                 intent.putExtra("NUM_PREGUNTAS", numPreguntas)
                 intent.putExtra("DIFICULTAD", dificultad)
+
                 intent.putExtra("avatarNombre", avatarNombre)
                 intent.putExtra("nombreJugador", nombreJugador)
-                intent.putExtra("avatarImagen", intent.getIntExtra("avatarImagen", R.drawable.avatar1))
+                intent.putExtra("avatarImagen", avatarImagen)
+                intent.putExtra("avatarImagenName", avatarImagenName)
 
                 startActivity(intent)
                 finish()
+
             }
         }
     }

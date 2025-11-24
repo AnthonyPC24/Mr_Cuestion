@@ -60,6 +60,8 @@ class QuizActivity : AppCompatActivity() {
 
 
         val avatarImagen = intent.getIntExtra("avatarImagen", R.drawable.avatar1)
+        val avatarImagenName = intent.getStringExtra("avatarImagenName") ?: "avatar_desconocido"
+
         val avatarView = findViewById<ImageView>(R.id.avatarJugador)
         avatarView.setImageResource(avatarImagen)
 
@@ -307,7 +309,7 @@ class QuizActivity : AppCompatActivity() {
         } else {
             // Si no existe ninguna, crear nueva
             val nuevaPartida = Partida(
-                avatar = intent.getStringExtra("avatarNombre") ?: "avatar_desconocido",
+                avatar = intent.getStringExtra("avatarImagenName") ?: "avatar_desconocido",
                 nombreJugador = nombreJugador,
                 numPreguntas = totalPreguntas,
                 dificultad = intent.getStringExtra("DIFICULTAD") ?: "Fácil",

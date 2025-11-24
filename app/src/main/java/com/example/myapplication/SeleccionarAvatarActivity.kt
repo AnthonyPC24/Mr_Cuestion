@@ -31,12 +31,12 @@ class SeleccionarAvatarActivity : AppCompatActivity() {
         tapSound = MediaPlayer.create(this, R.raw.tap)
 
         val avatares = listOf(
-            Avatar(R.id.avatar1, "Cappuccino Assassino", R.drawable.avatar1),
-            Avatar(R.id.avatar2, "Brr Brr Patapim", R.drawable.avatar2),
-            Avatar(R.id.avatar3, "Ballerina Cappuccina", R.drawable.avatar3),
-            Avatar(R.id.avatar4, " Orangutan Ananasini", R.drawable.avatar4),
-            Avatar(R.id.avatar5, "Cocofanto Elefanto", R.drawable.avatar5),
-            Avatar(R.id.avatar6, "Tung Tung Sahur", R.drawable.avatar6)
+            Avatar(R.id.avatar1, "Cappuccino Assassino", R.drawable.avatar1, "avatar1.png"),
+            Avatar(R.id.avatar2, "Brr Brr Patapim", R.drawable.avatar2, "avatar2.png"),
+            Avatar(R.id.avatar3, "Ballerina Cappuccina", R.drawable.avatar3, "avatar3.png"),
+            Avatar(R.id.avatar4, "Orangutan Ananasini", R.drawable.avatar4, "avatar4.png"),
+            Avatar(R.id.avatar5, "Cocofanto Elefanto", R.drawable.avatar5, "avatar5.png"),
+            Avatar(R.id.avatar6, "Tung Tung Sahur", R.drawable.avatar6, "avatar6.png")
                              )
 
         // 🎞️ Animación de movimiento de los avatares
@@ -88,9 +88,11 @@ private fun SeleccionarAvatarActivity.mostrarDialogoNombreJugador(avatar: Avatar
 
             // Pasamos avatar + nombre del jugador
             val intent = Intent(this, SeleccionarPreguntasActivity::class.java)
-            intent.putExtra("avatarNombre", avatar.nombre)
-            intent.putExtra("avatarImagen", avatar.imagen)
+            intent.putExtra("avatarNombre", avatar.nombre)      // nombre visible
+            intent.putExtra("avatarImagen", avatar.imagen)      // drawable
+            intent.putExtra("avatarImagenName", avatar.imagenName)
             intent.putExtra("nombreJugador", nombreJugador)
+
 
             Toast.makeText(
                 this,
