@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ import com.example.myapplication.model.UsuarioResumen
 import com.google.gson.Gson
 import java.io.File
 import com.example.myapplication.utils.generarHallOfFame
+import com.bumptech.glide.Glide
 
 
 class UsuariosActivity : AppCompatActivity() {
@@ -32,9 +34,19 @@ class UsuariosActivity : AppCompatActivity() {
         val txtPuntuacionTotal = findViewById<TextView>(R.id.txtPuntuacionTotal)
         val txtTiempoTotal = findViewById<TextView>(R.id.txtTiempoTotal)
         val btnNextUser = findViewById<ImageView>(R.id.btnNextUser)
+        val volverAlMenuFlecha = findViewById<ImageView>(R.id.volverAlMenuFlecha)
+
 
         val miFuente = ResourcesCompat.getFont(this, R.font.hollywood)
         userName.typeface = miFuente
+
+        val gifView = findViewById<ImageView>(R.id.confettiGif)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.confetti)
+            .into(gifView)
+
 
 
         // 1. Leer JSON real
@@ -118,6 +130,12 @@ class UsuariosActivity : AppCompatActivity() {
             index = (index + 1) % users.size
             updateUser()
         }
+
+        volverAlMenuFlecha.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun loadPartidasFromInternalStorage(): List<Partida> {

@@ -142,4 +142,14 @@
         android:adjustViewBounds="true"
         android:contentDescription="Avatar del jugador" />
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/botonPista"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/pistas"
+        android:layout_margin="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
+
+
+</RelativeLayout>
