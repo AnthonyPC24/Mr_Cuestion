@@ -38,6 +38,8 @@ class QuizActivity : AppCompatActivity() {
     private var currentIndex = 0
     private var score = 0
 
+    private lateinit var textoPistas: TextView
+
     private var totalPreguntas: Int = 0
     private var respuestasCorrectas: Int = 0
 
@@ -84,6 +86,9 @@ class QuizActivity : AppCompatActivity() {
         val avatarView = findViewById<ImageView>(R.id.avatarJugador)
         avatarView.setImageResource(avatarImagen)
 
+        textoPistas = findViewById(R.id.textoPistas)
+        textoPistas.text = "Ayudas disponibles: $pistasDisponibles"
+
         avatarView.setOnClickListener {
             val characterGif = findViewById<ImageView>(R.id.characterGif)
 
@@ -92,7 +97,8 @@ class QuizActivity : AppCompatActivity() {
                 startRecording()
 
                 // 🔄 Cambiar la animación del personaje a "escuchando"
-                Glide.with(this).load(R.drawable.personaje_escuchando).into(characterGif)
+                Glide.with(this).load(R.drawable.personaje_escuchando).diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true).into(characterGif)
                 questionText.text = "Soy todo oidos, chaval"
 
             } else {
@@ -175,7 +181,8 @@ class QuizActivity : AppCompatActivity() {
                 R.drawable.personaje_golpeado3
                                    )
             val reaccionAleatoria = reacciones.random()
-            Glide.with(this).load(reaccionAleatoria).into(characterGif)
+            Glide.with(this).load(reaccionAleatoria).diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE)
+                .skipMemoryCache(true).into(characterGif)
 
             val golpeSound = MediaPlayer.create(this, R.raw.golpe)
             golpeSound.start()
@@ -205,15 +212,26 @@ class QuizActivity : AppCompatActivity() {
         val pistasButton = findViewById<ImageView>(R.id.botonPista)
 
         pistasButton.setOnClickListener {
+
             if (pistasDisponibles > 0 && !animandoPista) {
 
                 animandoPista = true
                 pistasDisponibles--
+                respuestasCorrectas++
+
+                textoPistas.text = "Ayudas disponibles: $pistasDisponibles"
 
                 animacionVolteretaYPatada {
-                  rerollQuestionWithAnimation()
+                    if (currentIndex < questions.size - 1) {
+                        currentIndex++
+                        showQuestion()
+                    } else {
+                        finishGame()
+                    }
                 }
-            }
+                updateStars(currentIndex, true)
+
+                }
         }
 
         // 🔄 Cargar preguntas
@@ -337,7 +355,8 @@ class QuizActivity : AppCompatActivity() {
             partidas[index] = partida.copy(
                 puntuacion = respuestasCorrectas,
                 errores = errores,
-                tiempoPartida = tiempoPartida
+                tiempoPartida = tiempoPartida,
+                pistasUsadas = 3 - pistasDisponibles
                                           )
         } else {
             // Si no existe ninguna, crear nueva
@@ -348,7 +367,8 @@ class QuizActivity : AppCompatActivity() {
                 dificultad = intent.getStringExtra("DIFICULTAD") ?: "Fácil",
                 puntuacion = respuestasCorrectas,
                 errores = totalPreguntas - respuestasCorrectas,
-                tiempoPartida = calcularTiempoPartida(Partida.obtenerFechaActual())
+                tiempoPartida = calcularTiempoPartida(Partida.obtenerFechaActual()),
+                pistasUsadas = 3 - pistasDisponibles
                                       )
             partidas.add(nuevaPartida)
         }

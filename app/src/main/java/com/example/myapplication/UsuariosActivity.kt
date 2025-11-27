@@ -33,6 +33,7 @@ class UsuariosActivity : AppCompatActivity() {
         val txtErrores = findViewById<TextView>(R.id.txtErrores)
         val txtPuntuacionTotal = findViewById<TextView>(R.id.txtPuntuacionTotal)
         val txtTiempoTotal = findViewById<TextView>(R.id.txtTiempoTotal)
+        val txtAyudasTotales = findViewById<TextView>(R.id.txtAyudasTotales)
         val btnNextUser = findViewById<ImageView>(R.id.btnNextUser)
         val volverAlMenuFlecha = findViewById<ImageView>(R.id.volverAlMenuFlecha)
 
@@ -59,8 +60,14 @@ class UsuariosActivity : AppCompatActivity() {
             val u = users[index]
 
             // Lista de views a animar
-            val views = listOf(userName, txtVictorias, txtErrores, txtPuntuacionTotal, txtTiempoTotal, avatarImage)
-
+            val views = listOf(
+                userName,
+                txtVictorias,
+                txtErrores,
+                txtPuntuacionTotal,
+                txtTiempoTotal,
+                txtAyudasTotales,
+                avatarImage)
             // Animación: slide-out a la derecha + fade-out
             views.forEach { v ->
                 v.animate()
@@ -89,6 +96,9 @@ class UsuariosActivity : AppCompatActivity() {
                                         val puntuacionTotal = partidasUsuario.sumOf { it.puntuacion }
                                         txtPuntuacionTotal.text = "Puntuación total: $puntuacionTotal"
 
+                                        val ayudasTotales = partidasUsuario.sumOf { it.pistasUsadas }
+                                        txtAyudasTotales.text = "Ayudas usadas: $ayudasTotales"
+
                                         val totalSegundos = partidasUsuario.sumOf { partida ->
                                             val partes = partida.tiempoPartida.split(":")
                                             val minutos = partes.getOrNull(0)?.toIntOrNull() ?: 0
@@ -105,6 +115,8 @@ class UsuariosActivity : AppCompatActivity() {
                                             String.format("%02d:%02d", minutos, segundos)
                                         }
                                         txtTiempoTotal.text = "Tiempo total jugado: $tiempoFormateado"
+
+
 
                                         val avatarRes = resources.getIdentifier(u.avatar, "drawable", packageName)
                                         avatarImage.setImageResource(
