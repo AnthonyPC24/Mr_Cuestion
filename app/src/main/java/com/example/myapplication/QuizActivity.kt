@@ -280,13 +280,22 @@ class QuizActivity : AppCompatActivity() {
         val q = questions[currentIndex]
         questionText.text = q.text
         currentQuestionText = q.text
-        AudioPlayer.play(this, q.audio)
 
+        // 📢 REPRODUCIR AUDIO SI EXISTE
+        // 📢 REPRODUCIR AUDIO SI EXISTE
+        val audioExists = resources.getIdentifier(q.audio, "raw", packageName) != 0
+
+        if (audioExists) {
+            AudioPlayer.play(this, q.audio)
+        }
+
+
+        // Mezclar opciones
         val shuffledOptions = q.options.shuffled()
         val correctAnswer = q.options[q.correctIndex]
         val correctIndexInShuffled = shuffledOptions.indexOf(correctAnswer)
 
-// Mostrar las imágenes mezcladas
+        // Mostrar imágenes
         val res1 = resources.getIdentifier(shuffledOptions[0], "drawable", packageName)
         val res2 = resources.getIdentifier(shuffledOptions[1], "drawable", packageName)
         val res3 = resources.getIdentifier(shuffledOptions[2], "drawable", packageName)
@@ -295,7 +304,6 @@ class QuizActivity : AppCompatActivity() {
         option2.setImageResource(res2)
         option3.setImageResource(res3)
 
-// Detectar clics y verificar si eligió la correcta
         val options = listOf(option1, option2, option3)
         options.forEachIndexed { index, imageView ->
             imageView.setOnClickListener {
@@ -303,6 +311,7 @@ class QuizActivity : AppCompatActivity() {
             }
         }
     }
+
 
     // Maneja la selección de respuesta
     private fun handleAnswer(isCorrect: Boolean, selectedView: ImageView) {
