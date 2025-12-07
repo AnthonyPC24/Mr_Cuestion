@@ -43,6 +43,18 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="30dp">
 
+        <TextView
+            android:id="@+id/textoPistas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ayudas disponibles: 3"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:layout_above="@id/option1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="4dp"/>
+
+
         <ImageView
             android:id="@+id/option1"
             android:layout_width="120dp"
@@ -52,6 +64,7 @@
             android:scaleType="centerInside"
             android:clipToOutline="true"
             android:contentDescription="Opción 1" />
+
 
         <ImageView
             android:id="@+id/option2"
@@ -142,4 +155,15 @@
         android:adjustViewBounds="true"
         android:contentDescription="Avatar del jugador" />
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/botonPista"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/pistas"
+        android:layout_margin="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
+
+
+
+</RelativeLayout>

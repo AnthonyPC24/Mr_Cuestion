@@ -1,5 +1,9 @@
 package com.example.myapplication
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -34,8 +38,15 @@ class QuizActivity : AppCompatActivity() {
     private var currentIndex = 0
     private var score = 0
 
+    private lateinit var textoPistas: TextView
+
     private var totalPreguntas: Int = 0
     private var respuestasCorrectas: Int = 0
+
+    private var pistasDisponibles = 3
+
+    private var animandoPista = false
+
     private val imagenesCorrectas = ArrayList<String>()
 
     private var isRecording = false
@@ -43,6 +54,15 @@ class QuizActivity : AppCompatActivity() {
     private var recordedFile: String? = null
 
     private var currentQuestionText: String = ""
+
+    private lateinit var gif: ImageView
+
+    private val distancia = -550f // cuanto menos distancia mas se mueve el personaje
+
+    private val volteretaRes = R.drawable.tenna_spinning
+    private val idleRes = R.drawable.iddle
+    private val patadaRes = R.drawable.kick
+    private val gifOriginal = R.drawable.personaje_gif
 
 
 
@@ -52,6 +72,7 @@ class QuizActivity : AppCompatActivity() {
 
         val partidaId = intent.getLongExtra("PARTIDA_ID", -1L)
 
+        gif = findViewById(R.id.characterGif)
 
 
         if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -60,8 +81,13 @@ class QuizActivity : AppCompatActivity() {
 
 
         val avatarImagen = intent.getIntExtra("avatarImagen", R.drawable.avatar1)
+        val avatarImagenName = intent.getStringExtra("avatarImagenName") ?: "avatar_desconocido"
+
         val avatarView = findViewById<ImageView>(R.id.avatarJugador)
         avatarView.setImageResource(avatarImagen)
+
+        textoPistas = findViewById(R.id.textoPistas)
+        textoPistas.text = "Ayudas disponibles: $pistasDisponibles"
 
         avatarView.setOnClickListener {
             val characterGif = findViewById<ImageView>(R.id.characterGif)
@@ -71,7 +97,8 @@ class QuizActivity : AppCompatActivity() {
                 startRecording()
 
                 // 🔄 Cambiar la animación del personaje a "escuchando"
-                Glide.with(this).load(R.drawable.personaje_escuchando).into(characterGif)
+                Glide.with(this).load(R.drawable.personaje_escuchando).diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true).into(characterGif)
                 questionText.text = "Soy todo oidos, chaval"
 
             } else {
@@ -154,7 +181,8 @@ class QuizActivity : AppCompatActivity() {
                 R.drawable.personaje_golpeado3
                                    )
             val reaccionAleatoria = reacciones.random()
-            Glide.with(this).load(reaccionAleatoria).into(characterGif)
+            Glide.with(this).load(reaccionAleatoria).diskCacheStrategy(com.bumptech.glide.load.engine.DiskCacheStrategy.NONE)
+                .skipMemoryCache(true).into(characterGif)
 
             val golpeSound = MediaPlayer.create(this, R.raw.golpe)
             golpeSound.start()
@@ -180,6 +208,31 @@ class QuizActivity : AppCompatActivity() {
         option1 = findViewById(R.id.option1)
         option2 = findViewById(R.id.option2)
         option3 = findViewById(R.id.option3) //hola
+
+        val pistasButton = findViewById<ImageView>(R.id.botonPista)
+
+        pistasButton.setOnClickListener {
+
+            if (pistasDisponibles > 0 && !animandoPista) {
+
+                animandoPista = true
+                pistasDisponibles--
+                respuestasCorrectas++
+
+                textoPistas.text = "Ayudas disponibles: $pistasDisponibles"
+
+                animacionVolteretaYPatada {
+                    if (currentIndex < questions.size - 1) {
+                        currentIndex++
+                        showQuestion()
+                    } else {
+                        finishGame()
+                    }
+                }
+                updateStars(currentIndex, true)
+
+                }
+        }
 
         // 🔄 Cargar preguntas
         questions = loadQuestions(dificultad, numPreguntas)
@@ -227,13 +280,22 @@ class QuizActivity : AppCompatActivity() {
         val q = questions[currentIndex]
         questionText.text = q.text
         currentQuestionText = q.text
-        AudioPlayer.play(this, q.audio)
 
+        // 📢 REPRODUCIR AUDIO SI EXISTE
+        // 📢 REPRODUCIR AUDIO SI EXISTE
+        val audioExists = resources.getIdentifier(q.audio, "raw", packageName) != 0
+
+        if (audioExists) {
+            AudioPlayer.play(this, q.audio)
+        }
+
+
+        // Mezclar opciones
         val shuffledOptions = q.options.shuffled()
         val correctAnswer = q.options[q.correctIndex]
         val correctIndexInShuffled = shuffledOptions.indexOf(correctAnswer)
 
-// Mostrar las imágenes mezcladas
+        // Mostrar imágenes
         val res1 = resources.getIdentifier(shuffledOptions[0], "drawable", packageName)
         val res2 = resources.getIdentifier(shuffledOptions[1], "drawable", packageName)
         val res3 = resources.getIdentifier(shuffledOptions[2], "drawable", packageName)
@@ -242,7 +304,6 @@ class QuizActivity : AppCompatActivity() {
         option2.setImageResource(res2)
         option3.setImageResource(res3)
 
-// Detectar clics y verificar si eligió la correcta
         val options = listOf(option1, option2, option3)
         options.forEachIndexed { index, imageView ->
             imageView.setOnClickListener {
@@ -250,6 +311,7 @@ class QuizActivity : AppCompatActivity() {
             }
         }
     }
+
 
     // Maneja la selección de respuesta
     private fun handleAnswer(isCorrect: Boolean, selectedView: ImageView) {
@@ -302,18 +364,20 @@ class QuizActivity : AppCompatActivity() {
             partidas[index] = partida.copy(
                 puntuacion = respuestasCorrectas,
                 errores = errores,
-                tiempoPartida = tiempoPartida
+                tiempoPartida = tiempoPartida,
+                pistasUsadas = 3 - pistasDisponibles
                                           )
         } else {
             // Si no existe ninguna, crear nueva
             val nuevaPartida = Partida(
-                avatar = intent.getStringExtra("avatarNombre") ?: "avatar_desconocido",
+                avatar = intent.getStringExtra("avatarImagenName") ?: "avatar_desconocido",
                 nombreJugador = nombreJugador,
                 numPreguntas = totalPreguntas,
                 dificultad = intent.getStringExtra("DIFICULTAD") ?: "Fácil",
                 puntuacion = respuestasCorrectas,
                 errores = totalPreguntas - respuestasCorrectas,
-                tiempoPartida = calcularTiempoPartida(Partida.obtenerFechaActual())
+                tiempoPartida = calcularTiempoPartida(Partida.obtenerFechaActual()),
+                pistasUsadas = 3 - pistasDisponibles
                                       )
             partidas.add(nuevaPartida)
         }
@@ -458,6 +522,171 @@ class QuizActivity : AppCompatActivity() {
             player.release()
         }
     }
+
+    private fun animacionVolteretaYPatada(onPatada: () -> Unit) {
+        animVoltereta(onPatada)
+    }
+
+    private fun animVoltereta(onPatada: () -> Unit) {
+
+        Glide.with(this).asGif().load(volteretaRes).into(gif)
+
+        val mover = ObjectAnimator.ofFloat(gif, "translationX", 0f, distancia)
+        mover.duration = 800
+
+        val set = AnimatorSet()
+        set.playTogether(mover)
+
+        set.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                animIdle(onPatada)
+            }
+        })
+
+        set.start()
+    }
+
+    private fun animIdle(onPatada: () -> Unit) {
+        gif.rotation = 0f
+        Glide.with(this).asGif().load(idleRes).into(gif)
+
+
+        val idleAnim = ObjectAnimator.ofFloat(gif, "alpha", 1f, 1f)
+        idleAnim.duration = 1000
+
+        idleAnim.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                animPatada(onPatada)
+            }
+        })
+
+        idleAnim.start()
+    }
+
+    private fun animPatada(onPatada: () -> Unit) {
+        val currentX = gif.translationX
+        Glide.with(this).asGif().load(patadaRes).into(gif)
+
+        val animPatada = ObjectAnimator.ofFloat(gif, "translationX", currentX, currentX)
+        animPatada.duration = 1600
+
+        var preguntasLanzadas = false
+
+        animPatada.addUpdateListener { animation ->
+            val progress = animation.currentPlayTime.toFloat() / animation.duration
+            if (!preguntasLanzadas && progress >= 0.5f) { // cuando la patada llega a la mitad
+                preguntasLanzadas = true
+                lanzarPreguntas() // Aquí las preguntas empiezan a moverse
+            }
+        }
+
+        animPatada.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                animVolverCentro()
+            }
+        })
+
+        animPatada.start()
+    }
+
+
+
+    private fun animVolverCentro() {
+
+        // Antes de comenzar a mover, ponemos el gif de voltereta para que se vea girando
+        Glide.with(this@QuizActivity)
+            .asGif()
+            .load(volteretaRes)  // GIF de voltereta (spinning)
+            .into(gif)
+
+        val volver = ObjectAnimator.ofFloat(gif, "translationX", distancia, 0f)
+        volver.duration = 1000
+
+        volver.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+
+                // Cuando termina de volver al centro, cambiamos al gif original (quieto)
+                Glide.with(this@QuizActivity)
+                    .asGif()
+                    .load(gifOriginal)  // GIF original
+                    .into(gif)
+
+                gif.rotation = 0f
+
+                animandoPista = false;
+            }
+        })
+
+        volver.start()
+    }
+
+
+
+    private fun lanzarPreguntas() {
+        val views = listOf(option1, option2, option3)
+
+        val anims = views.map { v ->
+            ObjectAnimator.ofFloat(v, "translationX", 0f, -900f).apply {
+                duration = 300
+            }
+        }
+
+        val set = AnimatorSet()
+        set.playTogether(anims)
+
+        set.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+
+                // avanzar a la siguiente pregunta
+                if (currentIndex < questions.size - 1) {
+                    currentIndex++
+                    showQuestion()
+                }
+
+                // resetear posiciones
+                views.forEach { it.translationX = 0f }
+            }
+        })
+
+        set.start()
+    }
+
+
+    private fun rerollQuestionWithAnimation() {
+        if (currentIndex >= questions.size) return
+
+        // Cargar todas las preguntas posibles según la dificultad
+        val allQuestions = loadQuestions(dificultad = "Fácil", numPreguntas = 100)
+        val currentQuestion = questions[currentIndex]
+        val pool = allQuestions.filter { it.text != currentQuestion.text && !questions.contains(it) }
+
+        if (pool.isNotEmpty()) {
+            val nuevaPregunta = pool.random()
+            // Lanzar animación antes de cambiar la pregunta
+            val views = listOf(option1, option2, option3)
+
+            val anims = views.map { v ->
+                ObjectAnimator.ofFloat(v, "translationX", 0f, -900f).apply { duration = 300 }
+            }
+
+            val set = AnimatorSet()
+            set.playTogether(anims)
+            set.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    // Cambiar pregunta al terminar animación
+                    questions = questions.toMutableList().apply { set(currentIndex, nuevaPregunta) }
+                    showQuestion()
+                    views.forEach { it.translationX = 0f } // resetear posición
+                }
+            })
+
+            set.start()
+        }
+    }
+
+
+
+
 
 
 }

@@ -13,7 +13,8 @@ data class Partida(
     var puntuacion: Int = 0,
     var errores: Int = 0,
     var tiempoPartida: String = "",
-    var fechaHoraInicio: String = obtenerFechaActual()
+    var fechaHoraInicio: String = obtenerFechaActual(),
+    val pistasUsadas: Int = 0
                   ) {
     companion object {
         fun obtenerFechaActual(): String {

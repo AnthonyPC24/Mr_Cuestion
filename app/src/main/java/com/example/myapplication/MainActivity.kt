@@ -4,10 +4,12 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.animation.Animation
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.view.animation.ScaleAnimation
+import android.view.animation.TranslateAnimation
 import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
@@ -72,6 +74,24 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        val btnInfo = findViewById<ImageView>(R.id.btnInfo)
+        val animation = TranslateAnimation(
+            0f, 0f,      // fromX, toX
+            -20f, 20f    // fromY, toY (sube y baja)
+                                          ).apply {
+            duration = 2000          // velocidad (2 segundos)
+            repeatCount = Animation.INFINITE
+            repeatMode = Animation.REVERSE
+        }
+
+        btnInfo.startAnimation(animation)
+
+        btnInfo.setOnClickListener {
+            val intent = Intent(this, UsuariosActivity::class.java)
+            startActivity(intent)
+        }
+
 
         // --- CLICK PARA CAMBIAR DE ACTIVITY ---
         btnInicio.setOnClickListener {
